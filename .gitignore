@@ -1,0 +1,9 @@
+__pycache__
+
+# clangd cache
+.cache/
+
+build*/
+
+# coredump
+code
