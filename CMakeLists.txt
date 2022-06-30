@@ -8,10 +8,10 @@ set(CMAKE_CXX_STANDARD 14)
 # find packages
 # find_package(glog REQUIRED)
 # find_package(gflags REQUIRED)
-# find_package(pybind11 REQUIRED)
 find_package(Python3 COMPONENTS Interpreter Development)
+# https://pybind11.readthedocs.io/en/stable/cmake/index.html
+find_package(pybind11 CONFIG)
 message("Found Python3: ${Python3_EXECUTABLE}")
-include_directories(${PYTHON_INCLUDE_DIRS})
 
 # TODO(alleng) remove hardcode
 set(PADDLE_INC_DIR "/opt/conda/lib/python3.7/site-packages/paddle/include/")
