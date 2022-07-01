@@ -9,6 +9,9 @@ FROM graphcore/poplar:2.5.1
 # install basic tools
 RUN apt update && apt install vim wget -y
 
+# install build tools
+RUN apt install g++-8 -y
+
 # install miniforge
 ENV PATH="/opt/conda/bin:${PATH}"
 ARG PATH="/opt/conda/bin:${PATH}"
@@ -31,13 +34,19 @@ SHELL ["conda", "run", "-n", "py37", "/bin/bash", "-c"]
 
 # install tools
 # will install sysroot_linux-64
-RUN conda install clangdev gxx libcxx cmake ninja -y
+# use g++ from apt, glibc version of conda is too high
+# RUN conda install clangdev gxx libcxx
+RUN conda install cmake ninja clang-tools clang-format -y
 
 # install libs
 # RUN conda install glog boost protobuf -y
+RUN conda install pybind11 -y
 
 # install other tools
 RUN conda install bash-completion openssh git -y
+
+# CI
+RUN pip install pre-commit isort black
 
 # set env
 # # TODO use ${CONDA_PREFIX}
