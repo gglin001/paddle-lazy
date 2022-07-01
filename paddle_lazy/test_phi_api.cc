@@ -1,5 +1,6 @@
 #include <glog/logging.h>
 #include <paddle/extension.h>
+#include <paddle/phi/api/include/api.h>
 #include <paddle/phi/extension.h>
 
 int main() {

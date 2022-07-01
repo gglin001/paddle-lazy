@@ -18,24 +18,6 @@
 
 namespace phi {
 
-/*
-class LazyAllocation : public phi::Allocation {
- public:
-  LazyAllocation() = default;
-  LazyAllocation(LazyAllocation&& other) noexcept { swap(*this, other); }
-  LazyAllocation& operator=(LazyAllocation&& other) noexcept {
-    swap(*this, other);
-    return *this;
-  }
-  explicit LazyAllocation(std::shared_ptr<phi::Allocation> other) noexcept {
-    swap(*this, *other);
-  }
-
- public:
-  void SetPlace(Place p) { place_ = p; }
-};
-*/
-
 class LazyTensor {
  public:
   explicit LazyTensor(const DenseTensor* densetensor);

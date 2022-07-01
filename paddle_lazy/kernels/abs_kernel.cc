@@ -22,11 +22,10 @@
 #include "paddle/phi/common/place.h"
 #include "paddle/phi/common/type_traits.h"
 #include "paddle/phi/core/kernel_registry.h"
+#include "paddle_lazy/lazy_allocator.h"
 #include "paddle_lazy/lazy_backend.h"
 #include "paddle_lazy/lazy_nodes.h"
 #include "paddle_lazy/lazy_tensor.h"
-
-#include "../lazy_allocator.h"
 
 namespace phi {
 

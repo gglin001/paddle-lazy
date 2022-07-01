@@ -2,8 +2,6 @@
 
 #include <glog/logging.h>
 #include <paddle/phi/core/allocator.h>
-#include <cstddef>
-#include <memory>
 
 class LazyAllocator : public phi::Allocator {
  public:

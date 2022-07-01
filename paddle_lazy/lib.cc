@@ -1,10 +1,11 @@
-#include "lib.h"
-#include "lazy_backend.h"
+#include "paddle_lazy/lib.h"
 
 #include <glog/logging.h>
 #include <paddle/extension.h>
 #include <paddle/phi/extension.h>
 #include <pybind11/pybind11.h>
+
+#include "paddle_lazy/lazy_backend.h"
 
 namespace py = pybind11;  // NOLINT
 
