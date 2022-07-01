@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "paddle/phi/backends/ipu/eager_ops.h"
+#include "paddle_lazy/eager_backend/eager_ops.h"
 
 #include "glog/logging.h"
 #include "paddle/phi/api/include/context_pool.h"
@@ -27,22 +27,22 @@ namespace phi {
 
 using namespace paddle;  // NOLINT
 
-phi::DeviceContext* GetDeviceContextByBackend(phi::Backend backend) {
-  auto& pool = paddle::experimental::DeviceContextPool::Instance();
+phi::DeviceContext *GetDeviceContextByBackend(phi::Backend backend) {
+  auto &pool = paddle::experimental::DeviceContextPool::Instance();
   return pool.GetMutable(phi::TransToPhiPlace(backend));
 }
 
-void dense_copy(DenseTensor* src,
-                const Place& place,
+void dense_copy(DenseTensor *src,
+                const Place &place,
                 bool blocking,
-                DenseTensor* dst) {
+                DenseTensor *dst) {
   // paddle::framework::TensorCopy(*src, place, src);
-  auto* dev_ctx =
+  auto *dev_ctx =
       GetDeviceContextByBackend(phi::TransToPhiBackend(src->place()));
-  phi::Copy(dev_ctx, *src, place, false, src);
+  phi::Copy(*dev_ctx, *src, place, false, src);
 }
 
-void dense_abs(DenseTensor* x, DenseTensor* out) {
+void dense_abs(DenseTensor *x, DenseTensor *out) {
   // use cpu
   Backend kernel_backend = phi::Backend::CPU;
   DataLayout kernel_layout = x->layout();
@@ -50,15 +50,15 @@ void dense_abs(DenseTensor* x, DenseTensor* out) {
 
   VLOG(6) << "abs API kernel key: [" << kernel_backend << ", " << kernel_layout
           << ", " << kernel_data_type << "]";
-  const auto& kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
+  const auto &kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
       "abs", {kernel_backend, kernel_layout, kernel_data_type});
   VLOG(6) << "abs API kernel: " << kernel;
 
-  auto* dev_ctx = GetDeviceContextByBackend(kernel_backend);
+  auto *dev_ctx = GetDeviceContextByBackend(kernel_backend);
 
   using kernel_signature = void (*)(
-      const phi::DeviceContext&, const phi::DenseTensor&, phi::DenseTensor*);
-  auto* kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
+      const phi::DeviceContext &, const phi::DenseTensor &, phi::DenseTensor *);
+  auto *kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
   {
     // paddle::platform::RecordEvent kernel_record_event("abs compute",
     // paddle::platform::TracerEventType::OperatorInner, 1);
@@ -66,18 +66,18 @@ void dense_abs(DenseTensor* x, DenseTensor* out) {
   }
 }
 
-void dense_conv2d(const DenseTensor* input,
-                  const DenseTensor* filter,
-                  const std::vector<int>& strides,
-                  const std::vector<int>& paddings,
-                  const std::string& paddding_algorithm,
+void dense_conv2d(const DenseTensor *input,
+                  const DenseTensor *filter,
+                  const std::vector<int> &strides,
+                  const std::vector<int> &paddings,
+                  const std::string &paddding_algorithm,
                   int groups,
-                  const std::vector<int>& dilations,
-                  const std::string& data_format,
+                  const std::vector<int> &dilations,
+                  const std::string &data_format,
                   bool use_addto,
                   int workspace_size_MB,
                   bool exhaustive_search,
-                  DenseTensor* out) {
+                  DenseTensor *out) {
   // use cpu
   Backend kernel_backend = phi::Backend::CPU;
   DataLayout kernel_layout = input->layout();
@@ -85,26 +85,26 @@ void dense_conv2d(const DenseTensor* input,
 
   VLOG(6) << "conv2d API kernel key: [" << kernel_backend << ", "
           << kernel_layout << ", " << kernel_data_type << "]";
-  const auto& kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
+  const auto &kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
       "conv2d", {kernel_backend, kernel_layout, kernel_data_type}, true);
   VLOG(6) << "conv2d API kernel: " << kernel;
 
-  auto* dev_ctx = GetDeviceContextByBackend(kernel_backend);
+  auto *dev_ctx = GetDeviceContextByBackend(kernel_backend);
 
-  using kernel_signature = void (*)(const phi::DeviceContext&,
-                                    const phi::DenseTensor&,
-                                    const phi::DenseTensor&,
-                                    const std::vector<int>&,
-                                    const std::vector<int>&,
-                                    const std::string&,
+  using kernel_signature = void (*)(const phi::DeviceContext &,
+                                    const phi::DenseTensor &,
+                                    const phi::DenseTensor &,
+                                    const std::vector<int> &,
+                                    const std::vector<int> &,
+                                    const std::string &,
                                     int,
-                                    const std::vector<int>&,
-                                    const std::string&,
+                                    const std::vector<int> &,
+                                    const std::string &,
                                     bool,
                                     int,
                                     bool,
-                                    phi::DenseTensor*);
-  auto* kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
+                                    phi::DenseTensor *);
+  auto *kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
 
   {
     (*kernel_fn)(*dev_ctx,
@@ -123,18 +123,18 @@ void dense_conv2d(const DenseTensor* input,
   }
 }
 
-void dense_pool2d(const DenseTensor* input,
-                  const std::vector<int>& kernel_size,
-                  const std::vector<int>& strides,
-                  const std::vector<int>& paddings,
+void dense_pool2d(const DenseTensor *input,
+                  const std::vector<int> &kernel_size,
+                  const std::vector<int> &strides,
+                  const std::vector<int> &paddings,
                   bool ceil_mode,
                   bool exclusive,
-                  const std::string& data_format,
-                  const std::string& pooling_type,
+                  const std::string &data_format,
+                  const std::string &pooling_type,
                   bool global_pooling,
                   bool adaptive,
-                  const std::string& padding_algorithm,
-                  DenseTensor* out) {
+                  const std::string &padding_algorithm,
+                  DenseTensor *out) {
   // use cpu
   Backend kernel_backend = phi::Backend::CPU;
   DataLayout kernel_layout = input->layout();
@@ -142,26 +142,26 @@ void dense_pool2d(const DenseTensor* input,
 
   VLOG(6) << "pool2d API kernel key: [" << kernel_backend << ", "
           << kernel_layout << ", " << kernel_data_type << "]";
-  const auto& kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
+  const auto &kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
       "pool2d", {kernel_backend, kernel_layout, kernel_data_type}, true);
   VLOG(6) << "pool2d API kernel: " << kernel;
 
-  auto* dev_ctx = GetDeviceContextByBackend(kernel_backend);
+  auto *dev_ctx = GetDeviceContextByBackend(kernel_backend);
 
-  using kernel_signature = void (*)(const phi::DeviceContext&,
-                                    const phi::DenseTensor&,
-                                    const std::vector<int>&,
-                                    const std::vector<int>&,
-                                    const std::vector<int>&,
+  using kernel_signature = void (*)(const phi::DeviceContext &,
+                                    const phi::DenseTensor &,
+                                    const std::vector<int> &,
+                                    const std::vector<int> &,
+                                    const std::vector<int> &,
                                     bool,
                                     bool,
-                                    const std::string&,
-                                    const std::string&,
+                                    const std::string &,
+                                    const std::string &,
                                     bool,
                                     bool,
-                                    const std::string&,
-                                    phi::DenseTensor*);
-  auto* kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
+                                    const std::string &,
+                                    phi::DenseTensor *);
+  auto *kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
   {
     // paddle::platform::RecordEvent kernel_record_event("pool2d compute",
     // paddle::platform::TracerEventType::OperatorInner, 1);

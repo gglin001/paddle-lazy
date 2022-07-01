@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "paddle/phi/backends/ipu/lazy_backend.h"
+#include "paddle_lazy/lazy_backend.h"
 
 #include "glog/logging.h"
-#include "paddle/phi/backends/ipu/eager_ops.h"
-#include "paddle/phi/backends/ipu/lazy_nodes.h"
+#include "paddle_lazy/eager_backend/eager_ops.h"
+#include "paddle_lazy/lazy_nodes.h"
 
 namespace phi {
 
-LazyBackend* LazyBackend::GetInstance() {
+LazyBackend *LazyBackend::GetInstance() {
   static LazyBackend instance;
   return &instance;
 }
@@ -32,7 +32,7 @@ void LazyBackend::Sync() {
 }
 
 std::string LazyBackend::PrettyPrint() {
-  auto tensor_state = [](const DenseTensor* t) -> std::string {
+  auto tensor_state = [](const DenseTensor *t) -> std::string {
     std::stringstream ss;
     ss << t->place() << "|" << t->dtype() << "|";
     std::string init_state;
@@ -100,7 +100,7 @@ void LazyBackend::RunCpu() {
       dense_abs(node->ins.front()->GetDenseTensor(),
                 node->outs.front()->GetDenseTensor());
     } else if (node->op_type == "conv2d") {
-      auto conv2d_node = static_cast<Conv2dLazyNode*>(node.get());
+      auto conv2d_node = static_cast<Conv2dLazyNode *>(node.get());
       dense_conv2d(node->ins[0]->GetDenseTensor(),
                    node->ins[1]->GetDenseTensor(),
                    conv2d_node->strides,
@@ -114,7 +114,7 @@ void LazyBackend::RunCpu() {
                    conv2d_node->exhaustive_search,
                    conv2d_node->outs.front()->GetDenseTensor());
     } else if (node->op_type == "pool2d") {
-      auto pool2d_node = static_cast<Pool2dLazyNode*>(node.get());
+      auto pool2d_node = static_cast<Pool2dLazyNode *>(node.get());
       dense_pool2d(node->ins[0]->GetDenseTensor(),
                    pool2d_node->kernel_size,
                    pool2d_node->strides,

@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "paddle/phi/backends/ipu/lazy_backend.h"
+#include "paddle_lazy/lazy_backend.h"
 
 namespace phi {
 

@@ -16,14 +16,14 @@
 
 #include "glog/logging.h"
 #include "paddle/phi/backends/ipu/ipu_context.h"
-#include "paddle/phi/backends/ipu/lazy_backend.h"
-#include "paddle/phi/backends/ipu/lazy_nodes.h"
 #include "paddle/phi/common/data_type.h"
 #include "paddle/phi/common/float16.h"
 #include "paddle/phi/common/place.h"
 #include "paddle/phi/common/type_traits.h"
 #include "paddle/phi/core/kernel_registry.h"
-#include "paddle/phi/core/lazy_tensor.h"
+#include "paddle_lazy/lazy_backend.h"
+#include "paddle_lazy/lazy_nodes.h"
+#include "paddle_lazy/lazy_tensor.h"
 
 #include "../lazy_allocator.h"
 

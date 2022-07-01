@@ -20,6 +20,7 @@ include_directories(${PADDLE_INC_DIR})
 # do not need link with glog/gflags, just need header files(with same version)
 # may conflict with other libs
 include_directories("/opt/conda/include")
+include_directories(${CMAKE_SOURCE_DIR})
 link_directories(${PADDLE_LIB_DIR})
 
 add_definitions(-DPADDLE_WITH_CUSTOM_DEVICE)

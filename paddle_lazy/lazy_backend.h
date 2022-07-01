@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "paddle/phi/core/lazy_tensor.h"
+#include "paddle_lazy/lazy_tensor.h"
 
 namespace phi {
 
@@ -37,7 +37,7 @@ class LazyIr {
 
 class LazyBackend {
  public:
-  static LazyBackend* GetInstance();
+  static LazyBackend *GetInstance();
 
  public:
   void Sync();
