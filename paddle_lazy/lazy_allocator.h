@@ -11,9 +11,7 @@ class LazyAllocator : public phi::Allocator {
     return instance.get();
   }
 
-  static void Deleter(phi::Allocation* allocation) {
-    LOG(ERROR) << "LazyAllocator::Deleter do nothing ";
-  }
+  static void Deleter(phi::Allocation* allocation) { delete allocation; }
 
   AllocationPtr Allocate(size_t bytes_size) override {
     LOG(ERROR) << "LazyAllocator trying to allocate " << bytes_size;

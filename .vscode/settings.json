@@ -16,5 +16,5 @@
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/build/paddle_lazy/",
     },
-    "clangd.path": "/opt/conda/envs/py37/bin/clangd",
+    // "clangd.path": "/opt/conda/envs/py37/bin/clangd",
 }
