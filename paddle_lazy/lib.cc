@@ -1,18 +1,21 @@
 #include "lib.h"
+#include "lazy_backend.h"
 
 #include <glog/logging.h>
 #include <paddle/extension.h>
 #include <paddle/phi/extension.h>
 #include <pybind11/pybind11.h>
 
-void lib() { LOG(ERROR) << "enter a lib"; }
-
-int mul(int i, int j) { return i * j; }
-
 namespace py = pybind11;  // NOLINT
+
+void lib() { LOG(ERROR) << "enter a lib"; }
 
 PYBIND11_MODULE(lazy_lib, m) {
   m.def("lib", &lib);
 
-  m.def("mul", &mul);
+  m.def_submodule("lazy", "Lazy mode").def("markup", []() {
+    LOG(ERROR) << "LazyTensor call lazy.markup()";
+    phi::LazyBackend::GetInstance()->Sync();
+    LOG(ERROR) << "LazyTensor fin lazy.markup()";
+  });
 }
