@@ -1,0 +1,19 @@
+{
+    "cmake.configureSettings": {
+        // "CMAKE_PREFIX_PATH": "/opt/conda",
+        // "CMAKE_SYSROOT": "/opt/conda/x86_64-conda_cos6-linux-gnu/sysroot",
+        "CMAKE_INSTALL_PREFIX": "install",
+    },
+    "[cmake]": {
+        "editor.defaultFormatter": "cheshirekow.cmake-format"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/build/paddle_lazy/"
+    ],
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/build/paddle_lazy/",
+    }
+}
