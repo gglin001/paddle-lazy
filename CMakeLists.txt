@@ -24,6 +24,7 @@ link_directories(${PADDLE_LIB_DIR})
 
 add_definitions(-DPADDLE_WITH_CUSTOM_DEVICE)
 add_definitions(-DPADDLE_WITH_CUSTOM_KERNEL)
+add_definitions(-DPADDLE_WITH_IPU)
 # add_definitions(-DPADDLE_WITH_MKLDNN)
 
 add_subdirectory(paddle_lazy)
