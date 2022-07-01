@@ -42,13 +42,13 @@ void AbsKernel(const Context& ctx, const DenseTensor& x, DenseTensor* out) {
   out->AllocateFrom(LazyAllocator::Instance(), out->dtype());
   LOG(ERROR) << "fin AllocateFrom";
 
-  // auto lazy_x = std::make_shared<LazyTensor>(x);
-  // auto lazy_out = std::make_shared<LazyTensor>(out);
-  // auto lazy_node = std::make_shared<AbsLazyNode>();
-  // lazy_node->ins.push_back(lazy_x);
-  // lazy_node->outs.push_back(lazy_out);
-  // // register lazy_node to a global structor
-  // LazyBackend::GetInstance()->ir.nodes.push_back(lazy_node);
+  auto lazy_x = std::make_shared<LazyTensor>(x);
+  auto lazy_out = std::make_shared<LazyTensor>(out);
+  auto lazy_node = std::make_shared<AbsLazyNode>();
+  lazy_node->ins.push_back(lazy_x);
+  lazy_node->outs.push_back(lazy_out);
+  // register lazy_node to a global structor
+  LazyBackend::GetInstance()->ir.nodes.push_back(lazy_node);
 
   // 这里要和 torch 存在差别, 新的 LazyTensor 与 paddle::experimental::Tensor 和
   // phi::TensorBase 不存在继承关系.
