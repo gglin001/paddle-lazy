@@ -14,12 +14,15 @@ find_package(pybind11 CONFIG)
 message("Found Python3: ${Python3_EXECUTABLE}")
 
 # TODO(alleng) remove hardcode
-set(PADDLE_INC_DIR "/opt/conda/lib/python3.7/site-packages/paddle/include/")
-set(PADDLE_LIB_DIR "/opt/conda/lib/python3.7/site-packages/paddle/fluid/")
+# set(PADDLE_INC_DIR "/opt/conda/lib/python3.7/site-packages/paddle/include/")
+# set(PADDLE_LIB_DIR "/opt/conda/lib/python3.7/site-packages/paddle/fluid/")
+set(PADDLE_DIR "/opt/conda/envs/py37/lib/python3.7")
+set(GLOG_INC_DIR "${CMAKE_SOURCE_DIR}/3rd")
+set(PADDLE_INC_DIR "${PADDLE_DIR}/site-packages/paddle/include/")
+set(PADDLE_LIB_DIR "${PADDLE_DIR}/site-packages/paddle/fluid/")
 include_directories(${PADDLE_INC_DIR})
 # do not need link with glog/gflags, just need header files(with same version)
-# may conflict with other libs
-include_directories("/opt/conda/include")
+include_directories(${GLOG_INC_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 link_directories(${PADDLE_LIB_DIR})
 

@@ -1,7 +1,7 @@
 {
     "cmake.configureSettings": {
-        // "CMAKE_PREFIX_PATH": "/opt/conda",
-        // "CMAKE_SYSROOT": "/opt/conda/x86_64-conda_cos6-linux-gnu/sysroot",
+        // "CMAKE_PREFIX_PATH": "/opt/conda/envs/py37",
+        // "CMAKE_SYSROOT": "/opt/conda/envs/py37/x86_64-conda-linux-gnu/sysroot",
         "CMAKE_INSTALL_PREFIX": "install",
     },
     "[cmake]": {
@@ -15,5 +15,6 @@
     ],
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/build/paddle_lazy/",
-    }
+    },
+    "clangd.path": "/opt/conda/envs/py37/bin/clangd",
 }
