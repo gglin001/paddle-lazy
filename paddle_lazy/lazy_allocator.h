@@ -3,6 +3,8 @@
 #include <glog/logging.h>
 #include <paddle/phi/core/allocator.h>
 
+namespace phi {
+
 class LazyAllocator : public phi::Allocator {
  public:
   // singleton
@@ -19,3 +21,5 @@ class LazyAllocator : public phi::Allocator {
     return AllocationPtr(alloc, LazyAllocator::Deleter);
   }
 };
+
+}  // namespace phi
