@@ -32,21 +32,6 @@ void LazyBackend::Sync() {
 }
 
 std::string LazyBackend::PrettyPrint() {
-  auto tensor_state = [](const DenseTensor *t) -> std::string {
-    std::stringstream ss;
-    ss << t->place() << "|" << t->dtype() << "|";
-    std::string init_state;
-    if (!t->initialized()) {
-      init_state = "Uninitialized|";
-    } else if (t->capacity() == 0) {
-      init_state = "Empty|";
-    } else {
-      init_state = "Initialized|";
-    }
-    ss << init_state << "[" << t->dims() << "]";
-    return ss.str();
-  };
-
   std::stringstream ss;
   ss << "LazyIr{ \n";
   for (auto node : ir.nodes) {
@@ -57,7 +42,7 @@ std::string LazyBackend::PrettyPrint() {
         ss << ", ";
       }
       auto t = in->GetDenseTensor();
-      ss << tensor_state(t);
+      ss << DTPrint(t);
       ++count;
     }
     count = 0;
@@ -67,7 +52,7 @@ std::string LazyBackend::PrettyPrint() {
         ss << ", ";
       }
       auto t = out->GetDenseTensor();
-      ss << tensor_state(t);
+      ss << DTPrint(t);
       ++count;
     }
     ss << ")\n";
@@ -138,5 +123,20 @@ void LazyBackend::RunIpu() {
   //
   //
 }
+
+std::string DTPrint(const DenseTensor *t) {
+  std::stringstream ss;
+  ss << t->place() << "|" << t->dtype() << "|";
+  std::string init_state;
+  if (!t->initialized()) {
+    init_state = "Uninitialized|";
+  } else if (t->capacity() == 0) {
+    init_state = "Empty|";
+  } else {
+    init_state = "Initialized|";
+  }
+  ss << init_state << "[" << t->dims() << "]";
+  return ss.str();
+};
 
 }  // namespace phi

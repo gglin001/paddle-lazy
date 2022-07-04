@@ -50,4 +50,6 @@ class LazyBackend {
   LazyIr ir;
 };
 
+std::string DTPrint(const DenseTensor *);
+
 }  // namespace phi
