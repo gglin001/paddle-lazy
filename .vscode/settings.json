@@ -3,6 +3,7 @@
         // "CMAKE_PREFIX_PATH": "/opt/conda/envs/py37",
         // "CMAKE_SYSROOT": "/opt/conda/envs/py37/x86_64-conda-linux-gnu/sysroot",
         "CMAKE_INSTALL_PREFIX": "install",
+        "Python3_EXECUTABLE": "/opt/conda/envs/py37/bin/python",
     },
     "[cmake]": {
         "editor.defaultFormatter": "cheshirekow.cmake-format"
@@ -15,6 +16,7 @@
     ],
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/build/paddle_lazy/",
+        "GLOG_v": "10",
     },
     // "clangd.path": "/opt/conda/envs/py37/bin/clangd",
 }

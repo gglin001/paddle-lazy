@@ -89,13 +89,14 @@ void LazyBackend::Compile() {
 void LazyBackend::RunCpu() {
   LOG(ERROR) << "enter LazyBackend::Run()";
   for (auto node : ir.nodes) {
+    LOG(ERROR) << "----- lazy running " << node->op_type;
+
     // TODO(alleng) reduce tensor copy
     for (auto node : node->ins) {
       dense_copy(
           node->GetDenseTensor(), CPUPlace(), false, node->GetDenseTensor());
     }
 
-    LOG(ERROR) << "----- lazy running " << node->op_type;
     if (node->op_type == "abs") {
       dense_abs(node->ins.front()->GetDenseTensor(),
                 node->outs.front()->GetDenseTensor());
