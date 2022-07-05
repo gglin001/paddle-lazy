@@ -14,41 +14,16 @@
 
 #pragma once
 
+#include "paddle/phi/api/include/context_pool.h"
 #include "paddle/phi/core/dense_tensor.h"
 
 namespace phi {
+
+phi::DeviceContext* GetDeviceContextByBackend(phi::Backend backend);
 
 void dense_copy(DenseTensor* src,
                 const Place& place,
                 bool blocking,
                 DenseTensor* dst);
-
-void dense_abs(DenseTensor* x, DenseTensor* out);
-
-void dense_conv2d(const DenseTensor* input,
-                  const DenseTensor* filter,
-                  const std::vector<int>& strides,
-                  const std::vector<int>& paddings,
-                  const std::string& paddding_algorithm,
-                  int groups,
-                  const std::vector<int>& dilations,
-                  const std::string& data_format,
-                  bool use_addto,
-                  int workspace_size_MB,
-                  bool exhaustive_search,
-                  DenseTensor* out);
-
-void dense_pool2d(const DenseTensor* input,
-                  const std::vector<int>& kernel_size,
-                  const std::vector<int>& strides,
-                  const std::vector<int>& paddings,
-                  bool ceil_mode,
-                  bool exclusive,
-                  const std::string& data_format,
-                  const std::string& pooling_type,
-                  bool global_pooling,
-                  bool adaptive,
-                  const std::string& padding_algorithm,
-                  DenseTensor* out);
 
 }  // namespace phi

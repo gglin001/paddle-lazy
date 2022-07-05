@@ -15,7 +15,6 @@
 #include "paddle_lazy/lazy_backend.h"
 
 #include "glog/logging.h"
-#include "paddle_lazy/eager_backend/eager_ops.h"
 #include "paddle_lazy/eager_backend/op_runner.h"
 #include "paddle_lazy/lazy_nodes.h"
 
@@ -77,13 +76,6 @@ void LazyBackend::RunCpu() {
   auto op_runner = OpRunner();
   for (auto node : ir.nodes) {
     LOG(ERROR) << "----- lazy running " << node->op_type;
-
-    // TODO(alleng) reduce tensor copy
-    for (auto node : node->ins) {
-      dense_copy(
-          node->GetDenseTensor(), CPUPlace(), false, node->GetDenseTensor());
-    }
-
     op_runner.Run(node);
   }
 }

@@ -40,12 +40,9 @@ def gen_cc(cc):
 #include "paddle/phi/infermeta/ternary.h"
 #include "paddle/phi/core/dense_tensor.h"
 
-namespace phi {{
+#include "paddle_lazy/eager_backend/eager_ops.h"
 
-phi::DeviceContext *GetDeviceContextByBackend(phi::Backend backend) {{
-  auto &pool = paddle::experimental::DeviceContextPool::Instance();
-  return pool.GetMutable(phi::TransToPhiPlace(backend));
-}}
+namespace phi {{
 
 {cc}
 
@@ -72,7 +69,7 @@ class API(BaseAPI):
     def header(self):
         api_declaration = f"""
 void dense_{self.api}({self.get_declare_args()});
-        """
+"""
         return api_declaration
 
     def cc(self):

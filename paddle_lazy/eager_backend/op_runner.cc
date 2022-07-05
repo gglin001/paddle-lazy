@@ -1,11 +1,17 @@
 #include "paddle_lazy/eager_backend/op_runner.h"
 
-#include "paddle_lazy/eager_backend/eager_ops.h"
+#include "paddle_lazy/eager_backend/all_ops.h"
 #include "paddle_lazy/lazy_nodes.h"
 
 namespace phi {
 
 void OpRunner::Run(phi::LazyNodePtr node) {
+  // TODO(alleng) reduce tensor copy
+  for (auto node : node->ins) {
+    dense_copy(
+        node->GetDenseTensor(), CPUPlace(), false, node->GetDenseTensor());
+  }
+
   if (node->op_type == "abs") {
     dense_abs(node->ins.front()->GetDenseTensor(),
               node->outs.front()->GetDenseTensor());
@@ -13,6 +19,7 @@ void OpRunner::Run(phi::LazyNodePtr node) {
     auto conv2d_node = static_cast<Conv2dLazyNode *>(node.get());
     dense_conv2d(node->ins[0]->GetDenseTensor(),
                  node->ins[1]->GetDenseTensor(),
+                 conv2d_node->outs.front()->GetDenseTensor(),
                  conv2d_node->strides,
                  conv2d_node->dilations_t,
                  conv2d_node->padding_algorithm,
@@ -21,11 +28,11 @@ void OpRunner::Run(phi::LazyNodePtr node) {
                  conv2d_node->data_format,
                  conv2d_node->use_addto,
                  conv2d_node->workspace_size_MB,
-                 conv2d_node->exhaustive_search,
-                 conv2d_node->outs.front()->GetDenseTensor());
+                 conv2d_node->exhaustive_search);
   } else if (node->op_type == "pool2d") {
     auto pool2d_node = static_cast<Pool2dLazyNode *>(node.get());
     dense_pool2d(node->ins[0]->GetDenseTensor(),
+                 pool2d_node->outs.front()->GetDenseTensor(),
                  pool2d_node->kernel_size,
                  pool2d_node->strides,
                  pool2d_node->paddings,
@@ -35,8 +42,7 @@ void OpRunner::Run(phi::LazyNodePtr node) {
                  pool2d_node->pooling_type,
                  pool2d_node->global_pooling,
                  pool2d_node->adaptive,
-                 pool2d_node->padding_algorithm,
-                 pool2d_node->outs.front()->GetDenseTensor());
+                 pool2d_node->padding_algorithm);
   } else {
     PADDLE_THROW(phi::errors::Unimplemented("not suported op"));
   }
