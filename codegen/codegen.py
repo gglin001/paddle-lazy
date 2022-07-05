@@ -82,13 +82,12 @@ void dense_{self.api}({self.get_define_args()}) {{
 
 
 def main():
-    cur_dir = os.path.dirname(os.path.realpath(__file__))
     parser = argparse.ArgumentParser(
         description='Generate PaddlePaddle C++ API files')
     parser.add_argument('--api_yaml_path',
                         help='path to api yaml file',
                         nargs='+',
-                        default=f'{cur_dir}/test_api.yaml')
+                        default=f'codegen/test_api.yaml')
     parser.add_argument('--api_header_path',
                         help='output of generated api header code file',
                         default='paddle_lazy/eager_backend/autogen_ops.h')
