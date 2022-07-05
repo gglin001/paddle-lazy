@@ -1,5 +1,5 @@
 execute_process(
-  COMMAND ${Python3_EXECUTABLE} codegen/codegen.py
+  COMMAND ${Python3_EXECUTABLE} codegen/autogen_ops.py
   COMMAND echo "finish codegen"
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
