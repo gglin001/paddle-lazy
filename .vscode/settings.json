@@ -19,4 +19,5 @@
         "GLOG_v": "10",
     },
     // "clangd.path": "/opt/conda/envs/py37/bin/clangd",
+    "python.formatting.provider": "yapf",
 }

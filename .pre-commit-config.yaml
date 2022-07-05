@@ -6,10 +6,14 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/psf/black
-    rev: 22.3.0
+  # - repo: https://github.com/psf/black
+  #   rev: 22.3.0
+  #   hooks:
+  #     - id: black
+  - repo: https://github.com/google/yapf
+    rev: v0.32.0
     hooks:
-      - id: black
+      - id: yapf
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:
