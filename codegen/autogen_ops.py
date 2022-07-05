@@ -1,5 +1,4 @@
 import argparse
-import os
 
 import yaml
 from base_api import BaseAPI

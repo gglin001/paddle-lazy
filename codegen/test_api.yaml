@@ -1,13 +1,3 @@
-- api : pool2d
-  args : (Tensor x, int[] kernel_size, int[] strides, int[] paddings, bool ceil_mode, bool exclusive, str data_format, str pooling_type, bool global_pooling, bool adaptive, str padding_algorithm)
-  output : Tensor(out)
-  infer_meta :
-    func : PoolInferMeta
-  kernel :
-    func : pool2d
-    use_gpudnn : true
-  backward : pool2d_grad
-
 - api : abs
   args : (Tensor x)
   output : Tensor
@@ -22,3 +12,13 @@
   output : Tensor
   invoke : conv2d_impl(input, filter, strides, paddings, paddding_algorithm, groups, dilations, data_format, use_addto, workspace_size_MB, exhaustive_search)
   backward : conv2d_grad
+
+- api : pool2d
+  args : (Tensor x, int[] kernel_size, int[] strides, int[] paddings, bool ceil_mode, bool exclusive, str data_format, str pooling_type, bool global_pooling, bool adaptive, str padding_algorithm)
+  output : Tensor(out)
+  infer_meta :
+    func : PoolInferMeta
+  kernel :
+    func : pool2d
+    use_gpudnn : true
+  backward : pool2d_grad

@@ -1,5 +1,10 @@
 add_subdirectory(eager_backend)
 
+execute_process(
+  COMMAND ${Python3_EXECUTABLE} codegen/autogen_lazy_node.py
+  COMMAND echo "finish autogen_lazy_node"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 file(GLOB KERNELS kernels/*.cc)
 message("KERNELS: ${KERNELS}")
 set(LAZY_SRCS lib.cc lazy_allocator.cc lazy_tensor.cc lazy_backend.cc

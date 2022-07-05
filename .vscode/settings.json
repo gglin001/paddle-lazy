@@ -16,7 +16,7 @@
     ],
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/build/paddle_lazy/",
-        "GLOG_v": "10",
+        // "GLOG_v": "10",
     },
     // "clangd.path": "/opt/conda/envs/py37/bin/clangd",
     "python.formatting.provider": "yapf",
