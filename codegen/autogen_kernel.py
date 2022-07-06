@@ -53,11 +53,7 @@ void {self.api_kernel}({self.get_init_args()}) {{
         declare_args = ['const Context& dev_ctx']
         declare_args.extend(self.get_input_tensor_args(inplace_flag))
         for name in self.attrs['names']:
-            default_value = ''
-            if self.attrs['attr_info'][name][1] is not None:
-                default_value = ' = ' + self.attrs['attr_info'][name][1]
-            declare_args.append(self.attrs['attr_info'][name][0] + ' ' + name +
-                                default_value)
+            declare_args.append(self.attrs['attr_info'][name][0] + ' ' + name)
         declare_args.extend(self.get_output_tensor_args())
         declare_args = ", ".join(declare_args)
         declare_args = declare_args.replace('const DenseTensor*',
