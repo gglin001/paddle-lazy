@@ -5,6 +5,11 @@ execute_process(
   COMMAND echo "finish autogen_lazy_node"
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
+execute_process(
+  COMMAND ${Python3_EXECUTABLE} codegen/autogen_kernel.py
+  COMMAND echo "finish autogen_kernel"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 file(GLOB KERNELS kernels/*.cc)
 message("KERNELS: ${KERNELS}")
 set(LAZY_SRCS lib.cc lazy_allocator.cc lazy_tensor.cc lazy_backend.cc
