@@ -10,10 +10,10 @@ def gen_header(header):
 
 #include <tuple>
 
-#include "paddle/phi/api/include/tensor.h"
-#include "paddle/phi/common/scalar.h"
-#include "paddle/phi/common/int_array.h"
-#include "paddle/utils/optional.h"
+#include <paddle/phi/api/include/tensor.h>
+#include <paddle/phi/common/scalar.h>
+#include <paddle/phi/common/int_array.h>
+#include <paddle/utils/optional.h>
 
 namespace phi {{
 
@@ -29,15 +29,15 @@ def gen_cc(cc):
 
 #include <memory>
 
-#include "glog/logging.h"
-#include "paddle/phi/api/include/context_pool.h"
-#include "paddle/phi/core/kernel_registry.h"
-#include "paddle/phi/infermeta/binary.h"
-#include "paddle/phi/infermeta/multiary.h"
-#include "paddle/phi/infermeta/nullary.h"
-#include "paddle/phi/infermeta/unary.h"
-#include "paddle/phi/infermeta/ternary.h"
-#include "paddle/phi/core/dense_tensor.h"
+#include <glog/logging.h>
+#include <paddle/phi/api/include/context_pool.h>
+#include <paddle/phi/core/kernel_registry.h>
+#include <paddle/phi/infermeta/binary.h>
+#include <paddle/phi/infermeta/multiary.h>
+#include <paddle/phi/infermeta/nullary.h>
+#include <paddle/phi/infermeta/unary.h>
+#include <paddle/phi/infermeta/ternary.h>
+#include <paddle/phi/core/dense_tensor.h>
 
 #include "paddle_lazy/eager_backend/eager_ops.h"
 

@@ -1,8 +1,8 @@
-#include "paddle/phi/kernels/gaussian_random_kernel.h"
+#include <paddle/phi/kernels/gaussian_random_kernel.h>
 
-#include "paddle/phi/backends/ipu/ipu_context.h"
-#include "paddle/phi/core/kernel_registry.h"
-#include "paddle/phi/core/tensor_utils.h"
+#include <paddle/phi/backends/ipu/ipu_context.h>
+#include <paddle/phi/core/kernel_registry.h>
+#include <paddle/phi/core/tensor_utils.h>
 
 namespace phi {
 
@@ -14,8 +14,6 @@ void GaussianRandomKernel(const Context& ctx,
                           int seed,
                           DataType dtype,
                           DenseTensor* out) {
-  LOG(ERROR) << "----------- GaussianRandomKernel IPU -----------";
-
   // cpu kernel
   phi::DenseTensor cpu_tensor;
   phi::DenseTensorMeta cpu_meta = {out->dtype(), out->dims()};

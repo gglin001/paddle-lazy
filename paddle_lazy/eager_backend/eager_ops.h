@@ -14,8 +14,8 @@
 
 #pragma once
 
-#include "paddle/phi/api/include/context_pool.h"
-#include "paddle/phi/core/dense_tensor.h"
+#include <paddle/phi/api/include/context_pool.h>
+#include <paddle/phi/core/dense_tensor.h>
 
 namespace phi {
 

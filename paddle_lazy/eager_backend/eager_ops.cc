@@ -14,14 +14,14 @@
 
 #include "paddle_lazy/eager_backend/eager_ops.h"
 
-#include "glog/logging.h"
-#include "paddle/phi/api/include/context_pool.h"
-#include "paddle/phi/common/backend.h"
-#include "paddle/phi/common/place.h"
-#include "paddle/phi/core/dense_tensor.h"
-#include "paddle/phi/core/device_context.h"
-#include "paddle/phi/core/kernel_factory.h"
-#include "paddle/phi/core/tensor_utils.h"
+#include <glog/logging.h>
+#include <paddle/phi/api/include/context_pool.h>
+#include <paddle/phi/common/backend.h>
+#include <paddle/phi/common/place.h>
+#include <paddle/phi/core/dense_tensor.h>
+#include <paddle/phi/core/device_context.h>
+#include <paddle/phi/core/kernel_factory.h>
+#include <paddle/phi/core/tensor_utils.h>
 
 namespace phi {
 

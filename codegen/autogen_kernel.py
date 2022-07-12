@@ -6,8 +6,8 @@ from base_api import BaseAPI
 
 def gen_cc(cc):
     return f"""
-#include "paddle/phi/include/kernels.h"
-#include "paddle/phi/core/kernel_registry.h"
+#include <paddle/phi/include/kernels.h>
+#include <paddle/phi/core/kernel_registry.h>
 
 #include "paddle_lazy/lazy_allocator.h"
 #include "paddle_lazy/lazy_backend.h"
