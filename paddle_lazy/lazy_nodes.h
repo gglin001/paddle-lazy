@@ -1,6 +1,6 @@
 #pragma once
 
-#include "paddle_lazy/lazy_backend.h"
+#include "paddle_lazy/lazy_nodes_autogen.h"
 
 namespace phi {
 

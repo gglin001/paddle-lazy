@@ -20,7 +20,6 @@
 #include "paddle_lazy/lazy_allocator.h"
 #include "paddle_lazy/lazy_backend.h"
 #include "paddle_lazy/lazy_nodes.h"
-#include "paddle_lazy/lazy_nodes_extra.h"
 #include "paddle_lazy/lazy_tensor.h"
 
 namespace phi {

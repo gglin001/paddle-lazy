@@ -16,7 +16,6 @@
 
 #include <glog/logging.h>
 #include "paddle_lazy/eager_backend/op_runner.h"
-#include "paddle_lazy/lazy_nodes.h"
 
 namespace phi {
 

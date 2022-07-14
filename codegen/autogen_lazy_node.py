@@ -9,7 +9,6 @@ def gen_header(header):
 #pragma once
 
 #include "paddle_lazy/lazy_backend.h"
-#include "paddle_lazy/lazy_nodes_extra.h"
 
 namespace phi {{
 
@@ -113,10 +112,10 @@ def main():
                         default=f'codegen/test_api.yaml')
     parser.add_argument('--api_header_path',
                         help='output of generated api header code file',
-                        default='paddle_lazy/lazy_nodes.h')
+                        default='paddle_lazy/lazy_nodes_autogen.h')
     parser.add_argument('--api_source_path',
                         help='output of generated api source code file',
-                        default='paddle_lazy/lazy_nodes.cc')
+                        default='paddle_lazy/lazy_nodes_autogen.cc')
     args = parser.parse_args()
     # args.api_yaml_path = list(args.api_yaml_path)[0]
 
