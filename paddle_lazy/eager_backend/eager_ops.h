@@ -16,7 +16,8 @@
 
 #include <paddle/phi/api/include/context_pool.h>
 #include <paddle/phi/core/dense_tensor.h>
-#include "paddle_lazy/eager_backend/autogen_ops.h"
+
+#include "paddle_lazy/eager_backend/eager_ops_autogen.h"
 #include "paddle_lazy/lazy_backend.h"
 
 namespace phi {

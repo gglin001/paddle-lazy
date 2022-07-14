@@ -1,12 +1,12 @@
 add_subdirectory(eager_backend)
 
 execute_process(
-  COMMAND ${Python3_EXECUTABLE} codegen/autogen_lazy_node.py
+  COMMAND ${Python3_EXECUTABLE} codegen/autogen_lazy_nodes.py
   COMMAND echo "finish autogen_lazy_node"
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 execute_process(
-  COMMAND ${Python3_EXECUTABLE} codegen/autogen_kernel.py
+  COMMAND ${Python3_EXECUTABLE} codegen/autogen_kernels.py
   COMMAND echo "finish autogen_kernel"
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 

@@ -25,7 +25,7 @@ namespace phi {{
 
 def gen_cc(cc):
     return f"""
-#include "paddle_lazy/eager_backend/autogen_ops.h"
+#include "paddle_lazy/eager_backend/eager_ops_autogen.h"
 
 #include <memory>
 
@@ -89,10 +89,11 @@ def main():
                         default=f'codegen/test_api.yaml')
     parser.add_argument('--api_header_path',
                         help='output of generated api header code file',
-                        default='paddle_lazy/eager_backend/autogen_ops.h')
-    parser.add_argument('--api_source_path',
-                        help='output of generated api source code file',
-                        default='paddle_lazy/eager_backend/autogen_ops.cc')
+                        default='paddle_lazy/eager_backend/eager_ops_autogen.h')
+    parser.add_argument(
+        '--api_source_path',
+        help='output of generated api source code file',
+        default='paddle_lazy/eager_backend/eager_ops_autogen.cc')
     args = parser.parse_args()
     # args.api_yaml_path = list(args.api_yaml_path)[0]
 
