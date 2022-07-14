@@ -27,19 +27,46 @@ namespace phi {
 
 using namespace paddle;  // NOLINT
 
-phi::DeviceContext *GetDeviceContextByBackend(phi::Backend backend) {
-  auto &pool = paddle::experimental::DeviceContextPool::Instance();
+std::map<std::string, std::function<void(LazyNodePtr)>>* GetDenseMap() {
+  static std::map<std::string, std::function<void(LazyNodePtr)>> dense_map;
+  return &dense_map;
+}
+
+phi::DeviceContext* GetDeviceContextByBackend(phi::Backend backend) {
+  auto& pool = paddle::experimental::DeviceContextPool::Instance();
   return pool.GetMutable(phi::TransToPhiPlace(backend));
 }
 
-void dense_copy(DenseTensor *src,
-                const Place &place,
+void dense_copy(DenseTensor* src,
+                const Place& place,
                 bool blocking,
-                DenseTensor *dst) {
+                DenseTensor* dst) {
   // paddle::framework::TensorCopy(*src, place, src);
-  auto *dev_ctx =
+  auto* dev_ctx =
       GetDeviceContextByBackend(phi::TransToPhiBackend(src->place()));
   phi::Copy(*dev_ctx, *src, place, false, src);
+}
+
+void dense_abs_grad(const DenseTensor* x,
+                    const DenseTensor* dout,
+                    DenseTensor* out) {
+  Backend kernel_backend = Backend::CPU;
+  DataLayout kernel_layout = x->layout();
+  DataType kernel_data_type = x->dtype();
+
+  VLOG(6) << "abs_grad API kernel key: [" << kernel_backend << ", "
+          << kernel_layout << ", " << kernel_data_type << "]";
+  const auto& kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
+      "abs_grad", {kernel_backend, kernel_layout, kernel_data_type});
+  VLOG(6) << "abs_grad kernel: " << kernel;
+
+  auto* dev_ctx = GetDeviceContextByBackend(kernel_backend);
+  using kernel_signature = void (*)(const phi::DeviceContext&,
+                                    const phi::DenseTensor&,
+                                    const phi::DenseTensor&,
+                                    phi::DenseTensor*);
+  auto* kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
+  { (*kernel_fn)(*dev_ctx, *x, *dout, out); }
 }
 
 }  // namespace phi

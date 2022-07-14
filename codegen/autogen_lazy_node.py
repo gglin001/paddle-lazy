@@ -9,6 +9,7 @@ def gen_header(header):
 #pragma once
 
 #include "paddle_lazy/lazy_backend.h"
+#include "paddle_lazy/lazy_nodes_extra.h"
 
 namespace phi {{
 

@@ -6,8 +6,10 @@ from base_api import BaseAPI
 
 def gen_cc(cc, cc1):
     return f"""
+#pragma once
+
 #include <map>
-#include "paddle_lazy/eager_backend/autogen_ops.h"
+#include "paddle_lazy/eager_backend/eager_ops.h"
 #include "paddle_lazy/lazy_backend.h"
 #include "paddle_lazy/lazy_nodes.h"
 
@@ -15,11 +17,18 @@ namespace phi {{
 
 {cc}
 
-static std::map<std::string, std::function<void(LazyNodePtr)>> dense_map {{
+static void init_func() {{
+
+GetDenseMap()->insert(
+{{
 
 {cc1}
 
+}});
+
 }};
+
+static int dummy = (init_func(), 0);
 
 }}  // namespace phi
 
