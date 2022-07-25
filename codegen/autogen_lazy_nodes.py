@@ -48,7 +48,8 @@ class API(BaseAPI):
 
     def __init__(self, api_yaml) -> None:
         super().__init__(api_yaml)
-        self.api_node = f"{self.api.capitalize()}LazyNode"
+        api = self.api.title().replace('_', '')
+        self.api_node = f"{api}LazyNode"
 
     def header(self):
         api_declaration = f"""

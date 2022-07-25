@@ -48,8 +48,9 @@ class API(BaseAPI):
 
     def __init__(self, api_yaml) -> None:
         super().__init__(api_yaml)
-        self.api_node = f"{self.api.capitalize()}LazyNode"
-        self.api_kernel = f"{self.api.capitalize()}Kernel"
+        api = self.api.title().replace('_', '')
+        self.api_node = f"{api}LazyNode"
+        self.api_kernel = f"{api}Kernel"
         self.lambda_name = f"lambda_{self.api}"
         self.dense_name = f"dense_{self.api}"
 

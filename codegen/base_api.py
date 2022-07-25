@@ -5,7 +5,10 @@ class BaseAPI:
 
     def __init__(self, api_yaml) -> None:
         self.api_yaml = api_yaml
-        self.api = self.api_yaml['api']
+        if 'backward_api' in api_yaml:
+            self.api = self.api_yaml['backward_api']
+        else:
+            self.api = self.api_yaml['api']
         self.inputs, self.attrs, self.outputs, self.optional_vars = self.parse_args(
         )
 
