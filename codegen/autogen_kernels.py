@@ -45,7 +45,7 @@ class API(BaseAPI):
 template <typename T, typename Context>
 void {self.api_kernel}({self.get_init_args()}) {{
 """
-        cc = api_code + self.gen_kernel_code() + f"\n}}"
+        cc = api_code + self.gen_kernel_code() + f"\n}}\n"
         reg = f"""
 PD_REGISTER_KERNEL({self.api}, IPU, ALL_LAYOUT, phi::{self.api_kernel}, float, double, int, int64_t) {{}}
 """
@@ -64,9 +64,9 @@ PD_REGISTER_KERNEL({self.api}, IPU, ALL_LAYOUT, phi::{self.api_kernel}, float, d
 
     def gen_kernel_code(self):
         code = []
-        code.append(f"""
-LOG(ERROR) << "----------- {self.api_kernel} IPU -----------";
-""")
+        code.append(
+            f"""LOG(ERROR) << "----------- {self.api_kernel} IPU -----------";"""
+        )
         # fake alloc
         for name in self.outputs['names']:
             code.append(
