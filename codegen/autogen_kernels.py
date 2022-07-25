@@ -19,18 +19,17 @@ namespace phi {{
 {cc}
 
 }}  // namespace phi
-
-#include "paddle_lazy/kernels/register.cc.inc"
-
 """
 
 
-def generate_api(ccs, args):
+def generate_api(ccs, regs, args):
     cc = ''.join(ccs)
     cc = gen_cc(cc)
+    regs = ''.join(regs)
 
     with open(args.api_source_path, 'w') as f:
         f.write(cc)
+        f.write(regs)
 
 
 class API(BaseAPI):
@@ -46,9 +45,11 @@ class API(BaseAPI):
 template <typename T, typename Context>
 void {self.api_kernel}({self.get_init_args()}) {{
 """
-        return api_code + self.gen_kernel_code() + """
-}
+        cc = api_code + self.gen_kernel_code() + f"\n}}"
+        reg = f"""
+PD_REGISTER_KERNEL({self.api}, IPU, ALL_LAYOUT, phi::{self.api_kernel}, float, double, int, int64_t) {{}}
 """
+        return cc, reg
 
     def get_init_args(self, inplace_flag=False):
         declare_args = ['const Context& dev_ctx']
@@ -114,10 +115,13 @@ def main():
         yaml_list = yaml.load(f, Loader=yaml.FullLoader)
 
     ccs = []
+    regs = []
     for api_yaml in yaml_list:
         api = API(api_yaml)
-        ccs.append(api.cc())
-    generate_api(ccs, args)
+        cc, reg = api.cc()
+        ccs.append(cc)
+        regs.append(reg)
+    generate_api(ccs, regs, args)
 
 
 if __name__ == '__main__':
