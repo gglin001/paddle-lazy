@@ -12,3 +12,5 @@ PD_REGISTER_KERNEL(abs,
 PD_REGISTER_KERNEL(conv2d, IPU, ALL_LAYOUT, phi::Conv2dKernel, float, double) {}
 
 PD_REGISTER_KERNEL(pool2d, IPU, ALL_LAYOUT, phi::Pool2dKernel, float, double) {}
+
+PD_REGISTER_KERNEL(mean, IPU, ALL_LAYOUT, phi::MeanKernel, float, double) {}

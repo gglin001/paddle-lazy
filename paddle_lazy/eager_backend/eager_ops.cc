@@ -69,4 +69,32 @@ void dense_abs_grad(const DenseTensor* x,
   { (*kernel_fn)(*dev_ctx, *x, *dout, out); }
 }
 
+void dense_mean_grad(const DenseTensor* x,
+                     const DenseTensor* dout,
+                     DenseTensor* dx,
+                     const std::vector<int64_t>& dims,
+                     bool keep_dim,
+                     bool reduce_all) {
+  Backend kernel_backend = Backend::CPU;
+  DataLayout kernel_layout = x->layout();
+  DataType kernel_data_type = x->dtype();
+
+  VLOG(6) << "mean_grad API kernel key: [" << kernel_backend << ", "
+          << kernel_layout << ", " << kernel_data_type << "]";
+  const auto& kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
+      "mean_grad", {kernel_backend, kernel_layout, kernel_data_type});
+  VLOG(6) << "mean_grad kernel: " << kernel;
+
+  auto* dev_ctx = GetDeviceContextByBackend(kernel_backend);
+  using kernel_signature = void (*)(const phi::DeviceContext&,
+                                    const phi::DenseTensor&,
+                                    const phi::DenseTensor&,
+                                    const std::vector<int64_t>&,
+                                    bool,
+                                    bool,
+                                    phi::DenseTensor*);
+  auto* kernel_fn = kernel.GetVariadicKernelFn<kernel_signature>();
+  { (*kernel_fn)(*dev_ctx, *x, *dout, dims, keep_dim, reduce_all, dx); }
+}
+
 }  // namespace phi

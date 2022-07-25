@@ -36,4 +36,11 @@ void dense_abs_grad(const DenseTensor* x,
                     const DenseTensor* dout,
                     DenseTensor* out);
 
+void dense_mean_grad(const DenseTensor* x,
+                     const DenseTensor* dout,
+                     DenseTensor* dx,
+                     const std::vector<int64_t>& dims,
+                     bool keep_dim,
+                     bool reduce_all);
+
 }  // namespace phi

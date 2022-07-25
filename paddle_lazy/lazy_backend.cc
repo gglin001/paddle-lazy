@@ -41,7 +41,7 @@ std::string LazyBackend::PrettyPrint() {
         ss << ", ";
       }
       auto t = in->GetDenseTensor();
-      ss << DTPrint(t);
+      ss << DTPrint(t) << "|" << in->GetDenseTensor();
       ++count;
     }
     count = 0;
@@ -51,7 +51,7 @@ std::string LazyBackend::PrettyPrint() {
         ss << ", ";
       }
       auto t = out->GetDenseTensor();
-      ss << DTPrint(t);
+      ss << DTPrint(t) << "|" << out->GetDenseTensor();
       ++count;
     }
     ss << ")\n";
@@ -74,7 +74,6 @@ void LazyBackend::RunCpu() {
   LOG(ERROR) << "enter LazyBackend::Run()";
   auto op_runner = OpRunner();
   for (auto node : ir.nodes) {
-    LOG(ERROR) << "----- lazy running " << node->op_type;
     op_runner.Run(node);
   }
 }

@@ -8,9 +8,11 @@
 namespace py = pybind11;  // NOLINT
 
 PYBIND11_MODULE(lazy_lib, m) {
-  m.def_submodule("lazy", "Lazy mode").def("markup", []() {
+  auto lazy = m.def_submodule("lazy", "Lazy mode");
+  lazy.def("markup", []() {
     LOG(ERROR) << "LazyTensor call lazy.markup()";
     phi::LazyBackend::GetInstance()->Sync();
     LOG(ERROR) << "LazyTensor fin lazy.markup()";
   });
+  lazy.def("debug", []() { phi::LazyBackend::GetInstance()->PrettyPrint(); });
 }
