@@ -46,7 +46,7 @@ RUN conda install pybind11 -y
 RUN conda install bash-completion openssh git -y
 
 # CI
-RUN pip install pre-commit isort black
+RUN pip install pre-commit isort black yapf
 
 # set env
 # # TODO use ${CONDA_PREFIX}
