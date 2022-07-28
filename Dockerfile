@@ -4,7 +4,7 @@
 # FROM continuumio/miniconda3
 # prefer to use miniforge3
 # FROM condaforge/miniforge3
-FROM graphcore/poplar:2.5.1
+FROM graphcore/poplar:2.6.0
 
 # install basic tools
 RUN apt update && apt install vim wget -y
