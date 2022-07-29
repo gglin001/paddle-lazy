@@ -41,9 +41,7 @@ void dense_copy(DenseTensor* src,
                 const Place& place,
                 bool blocking,
                 DenseTensor* dst) {
-  // paddle::framework::TensorCopy(*src, place, src);
-  auto* dev_ctx =
-      GetDeviceContextByBackend(phi::TransToPhiBackend(src->place()));
+  auto* dev_ctx = GetDeviceContextByBackend(phi::TransToPhiBackend(place));
   phi::Copy(*dev_ctx, *src, place, false, src);
 }
 

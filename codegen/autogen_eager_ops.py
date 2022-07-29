@@ -31,13 +31,13 @@ def gen_cc(cc):
 
 #include <glog/logging.h>
 #include <paddle/phi/api/include/context_pool.h>
+#include <paddle/phi/core/dense_tensor.h>
 #include <paddle/phi/core/kernel_registry.h>
 #include <paddle/phi/infermeta/binary.h>
 #include <paddle/phi/infermeta/multiary.h>
 #include <paddle/phi/infermeta/nullary.h>
-#include <paddle/phi/infermeta/unary.h>
 #include <paddle/phi/infermeta/ternary.h>
-#include <paddle/phi/core/dense_tensor.h>
+#include <paddle/phi/infermeta/unary.h>
 
 #include "paddle_lazy/eager_backend/eager_ops.h"
 
@@ -189,8 +189,9 @@ void dense_{self.api}({self.get_define_args()}) {{
 
 
 {code_indent}  VLOG(6) << "{self.api} API kernel key: [" << kernel_backend << ", " << kernel_layout << ", "<< kernel_data_type << "]";
-{code_indent}  const auto& kernel = phi::KernelFactory::Instance().SelectKernelOrThrowError(
+{code_indent}  const auto& kernel_result = phi::KernelFactory::Instance().SelectKernelOrThrowError(
 {code_indent}      "{kernel_name}", {{kernel_backend, kernel_layout, kernel_data_type}});
+{code_indent}  const auto& kernel = kernel_result.kernel;
 {code_indent}  VLOG(6) << "{kernel_name} kernel: " << kernel;
 
 {code_indent}  auto* dev_ctx = GetDeviceContextByBackend(kernel_backend);

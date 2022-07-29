@@ -69,10 +69,10 @@ PD_REGISTER_KERNEL({self.api}, IPU, ALL_LAYOUT, phi::{self.api_kernel}, float, d
         )
         # fake alloc
         for name in self.outputs['names']:
-            code.append(
-                f"{name}->AllocateFrom(LazyAllocator::Instance(), {name}->dtype());"
-            )
-
+            code.append(f"""
+if (!{name}->initialized()){{
+  {name}->AllocateFrom(LazyAllocator::Instance(), {name}->dtype());
+}}""")
         # create LazyNode
         attrs = ', '.join(self.attrs['names'])
         code.append(
