@@ -10,7 +10,7 @@ FROM graphcore/poplar:2.6.0
 RUN apt update && apt install vim wget -y
 
 # install build tools
-RUN apt install g++-8 -y
+RUN apt install gcc-8 g++-8 -y
 
 # install miniforge
 ENV PATH="/opt/conda/bin:${PATH}"
@@ -46,7 +46,7 @@ RUN conda install pybind11 -y
 RUN conda install bash-completion openssh git -y
 
 # CI
-RUN pip install pre-commit isort black yapf
+RUN pip install pre-commit isort black yapf cmake-format cmakelint
 
 # set env
 # # TODO use ${CONDA_PREFIX}
