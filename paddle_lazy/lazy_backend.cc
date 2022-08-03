@@ -91,17 +91,19 @@ void LazyBackend::RunIpu() {
 
 std::string DTPrint(const DenseTensor *t) {
   std::stringstream ss;
-  // ss << t->place();
-  ss << "|" << t->dtype() << "|";
+  ss << t->place() << "|";
+  ss << t->dtype() << "|";
   std::string init_state;
   if (!t->initialized()) {
-    init_state = "Uninitialized|";
+    ss << "Uninitialized|";
   } else if (t->capacity() == 0) {
-    init_state = "Empty|";
+    ss << "Empty|";
   } else {
-    init_state = "Initialized|";
+    // ss << t->place() << "|";
+    ss << "Initialized|"
+       << "Cap:" << t->capacity() << "|";
   }
-  ss << init_state << "[" << t->dims() << "]";
+  ss << "[" << t->dims() << "]";
   return ss.str();
 };
 

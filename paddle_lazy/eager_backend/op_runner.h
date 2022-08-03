@@ -11,6 +11,8 @@ class OpRunner {
   void Run(phi::LazyNodePtr);
 
   void ToIpu(phi::LazyNodePtr);
+
+  void ToCpu(phi::LazyNodePtr);
 };
 
 }  // namespace phi
