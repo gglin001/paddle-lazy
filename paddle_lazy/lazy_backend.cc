@@ -28,6 +28,8 @@ void LazyBackend::Sync() {
   PrettyPrint();
   Compile();
   RunCpu();
+  PrettyPrint();
+  ir.nodes.clear();
 }
 
 std::string LazyBackend::PrettyPrint() {
@@ -76,6 +78,10 @@ void LazyBackend::RunCpu() {
   for (auto node : ir.nodes) {
     op_runner.Run(node);
   }
+
+  for (auto node : ir.nodes) {
+    op_runner.ToIpu(node);
+  }
 }
 
 void LazyBackend::RunIpu() {
@@ -85,7 +91,8 @@ void LazyBackend::RunIpu() {
 
 std::string DTPrint(const DenseTensor *t) {
   std::stringstream ss;
-  ss << t->place() << "|" << t->dtype() << "|";
+  // ss << t->place();
+  ss << "|" << t->dtype() << "|";
   std::string init_state;
   if (!t->initialized()) {
     init_state = "Uninitialized|";
