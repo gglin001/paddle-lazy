@@ -36,27 +36,7 @@ std::string LazyBackend::PrettyPrint() {
   std::stringstream ss;
   ss << "LazyIr{ \n";
   for (auto node : ir.nodes) {
-    size_t count = 0;
-    ss << "\t" << node->op_type << ", (";
-    for (auto in : node->ins) {
-      if (count > 0) {
-        ss << ", ";
-      }
-      auto t = in->GetDenseTensor();
-      ss << DTPrint(t) << "|" << in->GetDenseTensor();
-      ++count;
-    }
-    count = 0;
-    ss << ") -> (";
-    for (auto out : node->outs) {
-      if (count > 0) {
-        ss << ", ";
-      }
-      auto t = out->GetDenseTensor();
-      ss << DTPrint(t) << "|" << out->GetDenseTensor();
-      ++count;
-    }
-    ss << ")\n";
+    ss << LazyNodePrint(node);
   }
   ss << "}\n";
 
@@ -87,6 +67,33 @@ void LazyBackend::RunCpu() {
 void LazyBackend::RunIpu() {
   //
   //
+}
+
+std::string LazyNodePrint(const LazyNodePtr node) {
+  LOG(ERROR) << "LazyNodePrint node: " << node->outs.front()->GetDenseTensor();
+  std::stringstream ss;
+  size_t count = 0;
+  ss << "\t" << node->op_type << ", (";
+  for (auto in : node->ins) {
+    if (count > 0) {
+      ss << ", ";
+    }
+    auto t = in->GetDenseTensor();
+    ss << DTPrint(t) << " | " << in->GetDenseTensor();
+    ++count;
+  }
+  count = 0;
+  ss << ") -> (";
+  for (auto out : node->outs) {
+    if (count > 0) {
+      ss << ", ";
+    }
+    auto t = out->GetDenseTensor();
+    ss << DTPrint(t) << " | " << out->GetDenseTensor();
+    ++count;
+  }
+  ss << ")\n";
+  return ss.str();
 }
 
 std::string DTPrint(const DenseTensor *t) {

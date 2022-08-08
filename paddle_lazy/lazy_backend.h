@@ -51,5 +51,6 @@ class LazyBackend {
 };
 
 std::string DTPrint(const DenseTensor *);
+std::string LazyNodePrint(const LazyNodePtr);
 
 }  // namespace phi
