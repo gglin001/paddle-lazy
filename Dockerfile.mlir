@@ -1,15 +1,17 @@
-# docker build -t paddle-lazy:latest .
+# docker build -t paddle-lazy-mlir:latest -f Dockerfile.mlir .
 
 # FROM continuumio/miniconda3
 # prefer to use miniforge3
 # FROM condaforge/miniforge3
-FROM graphcore/poplar:2.6.0
+# FROM graphcore/poplar:2.6.0
+FROM graphcore/poplar:2.6.0-ubuntu-20.04
 
 # install basic tools
-RUN apt update && apt install vim wget -y
+RUN apt update && apt install vim wget unzip -y
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
 
 # install build tools
-RUN apt install gcc-8 g++-8 -y
+# RUN apt install gcc-8 g++-8 -y
 
 # install miniforge
 ENV PATH="/opt/conda/bin:${PATH}"
@@ -43,6 +45,10 @@ RUN mamba install pybind11 -y
 
 # install other tools
 RUN mamba install bash-completion openssh git -y
+
+# install requirements for llvm
+RUN apt install -y lsb-release wget software-properties-common gnupg
+RUN apt install -y sudo
 
 # CI
 RUN pip install pre-commit isort black yapf cmake-format cmakelint
