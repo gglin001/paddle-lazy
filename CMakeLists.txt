@@ -1,4 +1,15 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
+
+# https://cmake.org/cmake/help/latest/policy/CMP0116.html
+if(POLICY CMP0116)
+  cmake_policy(SET CMP0116 OLD)
+endif()
+
+# https://cmake.org/cmake/help/latest/policy/CMP0077.html
+if(POLICY CMP0077)
+  set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+  cmake_policy(SET CMP0077 NEW)
+endif()
 
 project(paddle_lazy)
 
@@ -29,3 +40,4 @@ add_definitions(-DPADDLE_WITH_IPU)
 # add_definitions(-DPADDLE_WITH_MKLDNN)
 
 add_subdirectory(paddle_lazy)
+add_subdirectory(mlir_lib)

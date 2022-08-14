@@ -1,0 +1,11 @@
+set(LLVM_TARGET_DEFINITIONS PaddleOps.td)
+mlir_tablegen(PaddleOps.h.inc -gen-op-decls)
+mlir_tablegen(PaddleOps.cpp.inc -gen-op-defs)
+mlir_tablegen(PaddleDialect.h.inc -gen-dialect-decls -dialect=paddle)
+mlir_tablegen(PaddleDialect.cpp.inc -gen-dialect-defs -dialect=paddle)
+mlir_tablegen(PaddleTypes.h.inc -gen-typedef-decls)
+mlir_tablegen(PaddleTypes.cpp.inc -gen-typedef-defs)
+add_public_tablegen_target(MLIRPaddleOpsIncGen)
+
+add_mlir_doc(PaddleDialect PaddleDialect Paddle/ -gen-dialect-doc)
+add_mlir_doc(PaddleOps PaddleOps Paddle/ -gen-op-doc)

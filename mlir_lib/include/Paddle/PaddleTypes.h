@@ -1,0 +1,9 @@
+#ifndef F109FBEB_EEAF_4D85_8D01_AC401C3AD5F5
+#define F109FBEB_EEAF_4D85_8D01_AC401C3AD5F5
+
+#include "mlir/IR/BuiltinTypes.h"
+
+#define GET_TYPEDEF_CLASSES
+#include "Paddle/PaddleTypes.h.inc"
+
+#endif  // F109FBEB_EEAF_4D85_8D01_AC401C3AD5F5
