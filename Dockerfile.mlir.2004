@@ -1,4 +1,4 @@
-# docker build -t paddle-lazy-mlir:latest -f Dockerfile.mlir .
+# docker build -t paddle-lazy-mlir:latest -f Dockerfile.mlir.2004 .
 
 # FROM continuumio/miniconda3
 # prefer to use miniforge3
