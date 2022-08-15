@@ -2,6 +2,7 @@ __pycache__
 
 # clangd cache
 .cache/
+.vscode/
 
 build*/
 
