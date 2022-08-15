@@ -22,4 +22,36 @@ void OpRunner::Run(phi::LazyNodePtr node) {
   }
 }
 
+void OpRunner::ToCpu(phi::LazyNodePtr node) {
+  for (auto t : node->ins) {
+    if (!(t->GetDenseTensor()->place().GetType() == phi::AllocationType::CPU) &&
+        t->GetDenseTensor()->initialized() &&
+        t->GetDenseTensor()->capacity() > 0) {
+      dense_copy(t->GetDenseTensor(), CPUPlace(), false, t->GetDenseTensor());
+    }
+  }
+
+  for (auto t : node->outs) {
+    if (!(t->GetDenseTensor()->place().GetType() == phi::AllocationType::CPU) &&
+        t->GetDenseTensor()->initialized() &&
+        t->GetDenseTensor()->capacity() > 0) {
+      dense_copy(t->GetDenseTensor(), CPUPlace(), false, t->GetDenseTensor());
+    }
+  }
+}
+
+void OpRunner::ToIpu(phi::LazyNodePtr node) {
+  for (auto t : node->ins) {
+    if (!(t->GetDenseTensor()->place().GetType() == phi::AllocationType::IPU)) {
+      dense_copy(t->GetDenseTensor(), IPUPlace(), false, t->GetDenseTensor());
+    }
+  }
+
+  for (auto t : node->outs) {
+    if (!(t->GetDenseTensor()->place().GetType() == phi::AllocationType::IPU)) {
+      dense_copy(t->GetDenseTensor(), IPUPlace(), false, t->GetDenseTensor());
+    }
+  }
+}
+
 }  // namespace phi
