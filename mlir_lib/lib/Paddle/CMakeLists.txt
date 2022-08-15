@@ -1,0 +1,13 @@
+add_mlir_dialect_library(
+  MLIRPaddle
+  PaddleDialect.cpp
+  PaddleOps.cpp
+  PaddleTypes.cpp
+  ADDITIONAL_HEADER_DIRS
+  ${PROJECT_SOURCE_DIR}/include/Paddle
+  DEPENDS
+  MLIRPaddleOpsIncGen
+  LINK_LIBS
+  PUBLIC
+  MLIRIR
+  MLIRInferTypeOpInterface)

@@ -4,6 +4,8 @@
         // "CMAKE_SYSROOT": "/opt/conda/envs/py37/x86_64-conda-linux-gnu/sysroot",
         "CMAKE_INSTALL_PREFIX": "install",
         "Python3_EXECUTABLE": "/opt/conda/envs/py37/bin/python",
+        "MLIR_DIR": "/usr/lib/llvm-16/lib/cmake/mlir",
+        "LLVM_EXTERNAL_LIT": "/opt/conda/envs/py37/bin/lit",
     },
     "[cmake]": {
         "editor.defaultFormatter": "cheshirekow.cmake-format"
@@ -16,8 +18,13 @@
     ],
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/build/paddle_lazy/",
+        "PATH": "${workspaceFolder}/build/bin:${env:PATH}",
         // "GLOG_v": "10",
     },
     // "clangd.path": "/opt/conda/envs/py37/bin/clangd",
     "python.formatting.provider": "yapf",
+    "clangd.path": "/usr/bin/clangd-16",
+    "mlir.server_path": "/usr/bin/mlir-lsp-server-16",
+    "mlir.pdll_server_path": "/usr/bin/mlir-pdll-lsp-server-16",
+    "mlir.tablegen_server_path": "/usr/bin/tblgen-lsp-server-16",
 }
