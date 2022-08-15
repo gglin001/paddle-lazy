@@ -10,5 +10,9 @@
     "xaver.clang-format",
     "cheshirekow.cmake-format",
     "esbenp.prettier-vscode",
+    "llvm-vs-code-extensions.vscode-mlir",
+    "jakob-erzar.llvm-tablegen",
+    "RReverser.llvm",
+    "akiramiyakoda.cppincludeguard",
   ]
 }
