@@ -5,13 +5,8 @@
         "CMAKE_INSTALL_PREFIX": "install",
         "Python3_EXECUTABLE": "/opt/conda/envs/py37/bin/python",
         "MLIR_DIR": "/usr/lib/llvm-16/lib/cmake/mlir",
+        "LLVM_DIR": "/usr/lib/llvm-16/lib/cmake/llvm",
         "LLVM_EXTERNAL_LIT": "/opt/conda/envs/py37/bin/lit",
-    },
-    "[cmake]": {
-        "editor.defaultFormatter": "cheshirekow.cmake-format"
-    },
-    "[cpp]": {
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
     "python.analysis.extraPaths": [
         "${workspaceFolder}/build/paddle_lazy/"
@@ -21,7 +16,6 @@
         "PATH": "${workspaceFolder}/build/bin:${env:PATH}",
         // "GLOG_v": "10",
     },
-    // "clangd.path": "/opt/conda/envs/py37/bin/clangd",
     "python.formatting.provider": "yapf",
     "clangd.path": "/usr/bin/clangd-16",
     "mlir.server_path": "/usr/bin/mlir-lsp-server-16",
