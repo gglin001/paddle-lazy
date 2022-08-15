@@ -46,7 +46,7 @@ void UniformRandomRawKernel(const Context& dev_ctx,
                             float diag_val,
                             phi::DenseTensor* out) {
   out->Resize(phi::make_ddim(shape.GetData()));
-  T* data = dev_ctx.template Alloc<T>(out);
+  dev_ctx.template Alloc<T>(out);
   auto size = out->numel();
 
   // 1. CPU implement
