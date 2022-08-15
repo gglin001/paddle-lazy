@@ -8,9 +8,7 @@ def Paddle_Dialect : Dialect {
     let name = "paddle";
     let summary = "A paddle out-of-tree MLIR dialect.";
     let description = [{
-        This dialect is an example of an out-of-tree MLIR dialect designed to
-        illustrate the basic setup required to develop MLIR-based tools without
-        working inside of the LLVM source tree.
+        Paddle dialect out-of-tree MLIR and Paddle.
     }];
     let cppNamespace = "::mlir::paddle";
     let useDefaultTypePrinterParser=1;
