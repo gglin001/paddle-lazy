@@ -10,7 +10,7 @@ def Paddle_Dialect : Dialect {
     let description = [{
         Paddle dialect out-of-tree MLIR and Paddle.
     }];
-    let cppNamespace = "::mlir::paddle";
+    let cppNamespace = "::mlir::paddle::Paddle";
     let useDefaultTypePrinterParser=1;
 }
 

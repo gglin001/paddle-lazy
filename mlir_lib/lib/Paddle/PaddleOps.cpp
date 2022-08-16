@@ -7,3 +7,4 @@
 
 using namespace mlir;
 using namespace mlir::paddle;
+using namespace mlir::paddle::Paddle;

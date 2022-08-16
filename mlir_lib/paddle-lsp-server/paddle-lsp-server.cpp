@@ -8,7 +8,7 @@
 int main(int argc, char **argv) {
   mlir::DialectRegistry registry;
   registerAllDialects(registry);
-  registry.insert<mlir::paddle::PaddleDialect>();
+  registry.insert<mlir::paddle::Paddle::PaddleDialect>();
 
   return failed(MlirLspServerMain(argc, argv, registry));
 }

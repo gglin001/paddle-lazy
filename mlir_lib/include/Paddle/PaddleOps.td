@@ -27,4 +27,13 @@ def Paddle_AddOp : Paddle_Op<"add", [NoSideEffect]> {
     // let hasCustomAssemblyFormat = 1;
 }
 
+def Paddle_ReluOp : Paddle_Op<"relu", [NoSideEffect]> {
+    let summary = "Relu op.";
+    let arguments = (ins AnyPaddleTensorType:$x);
+    let results = (outs AnyPaddleTensorType:$res);
+    let assemblyFormat = [{
+        $x attr-dict `:` functional-type(operands, results)
+    }];
+}
+
 #endif // EC342222_0958_42BB_99C7_461FADCB026D

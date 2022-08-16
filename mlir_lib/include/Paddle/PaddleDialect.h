@@ -7,9 +7,11 @@
 
 namespace mlir {
 namespace paddle {
+namespace Paddle {
 //
 //
-}  // namespace paddle
-}  // namespace mlir
+}
+} // namespace paddle
+} // namespace mlir
 
-#endif  // F841FE84_4CCF_40BA_A883_1305B7B0379C
+#endif // F841FE84_4CCF_40BA_A883_1305B7B0379C
