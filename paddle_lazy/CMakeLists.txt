@@ -1,3 +1,6 @@
+# TODO(alleng) remove flag
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-inconsistent-missing-override")
+
 add_subdirectory(eager_backend)
 
 execute_process(
