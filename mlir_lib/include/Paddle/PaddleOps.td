@@ -36,4 +36,13 @@ def Paddle_ReluOp : Paddle_Op<"relu", [NoSideEffect]> {
     }];
 }
 
+def Paddle_SinOp : Paddle_Op<"sin", [NoSideEffect]> {
+    let summary = "Sin op.";
+    let arguments = (ins AnyTensor:$x);
+    let results = (outs AnyTensor:$res);
+    let assemblyFormat = [{
+        $x attr-dict `:` functional-type(operands, results)
+    }];
+}
+
 #endif // EC342222_0958_42BB_99C7_461FADCB026D
