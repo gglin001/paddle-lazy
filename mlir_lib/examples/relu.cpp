@@ -1,3 +1,4 @@
+#include "Paddle/PaddleTypes.h"
 #include "mlir/Dialect/Arithmetic/IR/Arithmetic.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/Math/IR/Math.h"
@@ -21,6 +22,7 @@
 
 #include "Paddle/PaddleDialect.h"
 #include "Paddle/PaddleOps.h"
+#include "Paddle/PaddleTypes.h"
 
 using namespace mlir;
 using namespace llvm;
@@ -41,11 +43,13 @@ int main() {
 
   OpBuilder builder(module->getBodyRegion());
 
-  auto zeroAttr = builder.getZeroAttr(builder.getF32Type());
-  mlir::Value zero = builder.create<arith::ConstantOp>(
-      mlir::UnknownLoc::get(&context), zeroAttr);
-  builder.create<Paddle::SinOp>(mlir::UnknownLoc::get(&context),
-                                builder.getF32Type(), zero);
+  ElementsAttr oneAttr = builder.getDenseF32ArrayAttr({1.0});
+  auto ty = Paddle::NonValueTensorType::get(&context, {}, builder.getF32Type());
+  mlir::Value one = builder.create<Paddle::ConstantOp>(
+      mlir::UnknownLoc::get(&context), ty, oneAttr);
+
+  builder.create<Paddle::ReluOp>(mlir::UnknownLoc::get(&context), one.getType(),
+                                 one);
 
   module->dump();
 }

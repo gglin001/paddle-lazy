@@ -49,6 +49,9 @@ public:
     assert(hasDtype() && "must have a dtype");
     return getOptionalDtype();
   }
+
+  /// Enable isa/dyn_cast for BaseTensorType.
+  static bool classof(Type type);
 };
 
 using GetTensorTypeFn =
@@ -76,6 +79,10 @@ inline Type BaseTensorType::getOptionalDtype() const {
   if (auto tensor = dyn_cast<NonValueTensorType>())
     return tensor.getOptionalDtype();
   llvm_unreachable("not a BaseTensorType!");
+}
+
+inline bool BaseTensorType::classof(Type type) {
+  return type.isa<NonValueTensorType>();
 }
 
 } // namespace Paddle
