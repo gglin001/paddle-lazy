@@ -3,7 +3,7 @@
 
 include "PaddleDialect.td"
 include "PaddleTypes.td"
-include "/mlir/Interfaces/InferTypeOpInterface.td"
+include "mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 
 def Paddle_AddOp : Paddle_Op<"add", [NoSideEffect]> {
@@ -25,6 +25,15 @@ def Paddle_AddOp : Paddle_Op<"add", [NoSideEffect]> {
     // let hasFolder = 1;
     // let hasCanonicalizer = 1;
     // let hasCustomAssemblyFormat = 1;
+}
+
+def Paddle_ConstantOp : Paddle_Op<"constant", [ConstantLike, NoSideEffect]> {
+    let summary = "Constant op.";
+    let arguments = (ins ElementsAttr:$value);
+    let results = (outs AnyPaddleTensorType:$result);
+    let assemblyFormat = [{
+        `(` $value `)` attr-dict `:` qualified(type($result))
+    }];
 }
 
 def Paddle_ReluOp : Paddle_Op<"relu", [NoSideEffect]> {
