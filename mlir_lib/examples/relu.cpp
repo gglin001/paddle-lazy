@@ -4,6 +4,7 @@
 #include "mlir/Dialect/Math/IR/Math.h"
 #include "mlir/IR/AsmState.h"
 #include "mlir/IR/BuiltinOps.h"
+#include "mlir/IR/BuiltinTypes.h"
 #include "mlir/IR/Dialect.h"
 #include "mlir/IR/MLIRContext.h"
 #include "mlir/IR/OperationSupport.h"
@@ -44,10 +45,9 @@ int main() {
   OpBuilder builder(module->getBodyRegion());
 
   ElementsAttr oneAttr = builder.getDenseF32ArrayAttr({1.0});
-  auto ty = Paddle::NonValueTensorType::get(&context, {}, builder.getF32Type());
+  auto ty = UnrankedTensorType::get(builder.getF32Type());
   mlir::Value one = builder.create<Paddle::ConstantOp>(
       mlir::UnknownLoc::get(&context), ty, oneAttr);
-
   builder.create<Paddle::ReluOp>(mlir::UnknownLoc::get(&context), one.getType(),
                                  one);
 

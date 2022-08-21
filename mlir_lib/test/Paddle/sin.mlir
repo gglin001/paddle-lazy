@@ -12,4 +12,10 @@ module {
         %1 = paddle.sin %0 : (tensor<2xf32>) -> tensor<2xf32>
         return
     }
+    // CHECK-LABEL: func.func @lala(
+    func.func @lala() {
+        %0 = paddle.constant(dense<1.0> : tensor<f32>) : tensor<*xf32>
+        %1 = paddle.sin %0 : (tensor<*xf32>) -> tensor<*xf32>
+        return
+    }
 }
