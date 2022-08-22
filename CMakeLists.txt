@@ -39,5 +39,7 @@ add_definitions(-DPADDLE_WITH_CUSTOM_KERNEL)
 add_definitions(-DPADDLE_WITH_IPU)
 # add_definitions(-DPADDLE_WITH_MKLDNN)
 
+include_directories(mlir_lib/paddle-import)
+
 add_subdirectory(paddle_lazy)
 add_subdirectory(mlir_lib)

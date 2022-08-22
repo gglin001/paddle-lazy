@@ -3,6 +3,8 @@
 #include <glog/logging.h>
 #include "paddle_lazy/eager_backend/op_runner.h"
 
+#include "import.h"
+
 namespace phi {
 
 LazyBackend *LazyBackend::GetInstance() {
@@ -32,8 +34,8 @@ std::string LazyBackend::PrettyPrint() {
 
 void LazyBackend::Compile() {
   LOG(ERROR) << "enter LazyBackend::Compile()";
-  // convert LazyIr to LazyGraph(DAG)
-  // LazyGraph should be runable one by one step(op)
+  // convert LazyIr to MLIR graph
+  import::run(ir);
 }
 
 void LazyBackend::RunCpu() {
