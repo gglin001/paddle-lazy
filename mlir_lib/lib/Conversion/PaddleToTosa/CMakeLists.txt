@@ -11,5 +11,5 @@ add_mlir_conversion_library(PaddleMLIRPaddleToTosa
   MLIRIR
   MLIRPass
   MLIRFuncDialect
-  MLIRPaddle
+  MLIRPaddleDialect
 )

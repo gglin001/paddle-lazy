@@ -1,5 +1,5 @@
 add_mlir_dialect_library(
-  MLIRPaddle
+  MLIRPaddleDialect
   PaddleDialect.cpp
   PaddleOps.cpp
   PaddleTypes.cpp
