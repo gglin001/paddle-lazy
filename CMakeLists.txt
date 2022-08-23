@@ -16,6 +16,8 @@ project(paddle_lazy)
 # paddle use c++14
 set(CMAKE_CXX_STANDARD 14)
 
+option(WITH_EAGER_BACKEND "with cpu eager backend for test" OFF)
+
 # find packages
 find_package(Python3 COMPONENTS Interpreter Development)
 # https://pybind11.readthedocs.io/en/stable/cmake/index.html
@@ -38,6 +40,9 @@ add_definitions(-DPADDLE_WITH_CUSTOM_DEVICE)
 add_definitions(-DPADDLE_WITH_CUSTOM_KERNEL)
 add_definitions(-DPADDLE_WITH_IPU)
 # add_definitions(-DPADDLE_WITH_MKLDNN)
+if(WITH_EAGER_BACKEND)
+  add_definitions(-DPADDLE_LAZY_WITH_EAGER_BACKEND)
+endif()
 
 include_directories(mlir_lib/paddle-import)
 

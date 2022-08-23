@@ -27,8 +27,7 @@ void func_1() {
 
 void func_2() {
   auto a = paddle::full({3, 4}, 2.0, DataType::FLOAT32, phi::IPUPlace());
-  auto b = a.copy_to(phi::IPUPlace(), false);
-  auto out = paddle::sin(b);
+  auto out = paddle::sin(a);
   phi::LazyBackend::GetInstance()->Sync();
 }
 

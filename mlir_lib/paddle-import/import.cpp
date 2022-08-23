@@ -20,15 +20,21 @@
 #include "llvm/Support/InitLLVM.h"
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/ToolOutputFile.h"
-#include <llvm-16/llvm/Support/raw_ostream.h>
+#include "llvm/Support/raw_ostream.h"
+
+#include <map>
 
 #include "Paddle/PaddleDialect.h"
 #include "Paddle/PaddleOps.h"
+
+#include "paddle_lazy/lazy_nodes.h"
+#include "paddle_lazy/lazy_nodes_autogen.h"
 
 using namespace mlir;
 using namespace llvm;
 using namespace mlir::paddle;
 using namespace mlir::paddle::Paddle;
+using namespace phi;
 
 namespace import {
 
@@ -45,17 +51,27 @@ void run(phi::LazyIr &ir) {
   context.loadAllAvailableDialects();
 
   OpBuilder builder(module->getBodyRegion());
-
-  ElementsAttr oneAttr = builder.getDenseF32ArrayAttr({1.0});
-  auto ty = UnrankedTensorType::get(builder.getF32Type());
-  mlir::Value one = builder.create<Paddle::ConstantOp>(
-      mlir::UnknownLoc::get(&context), ty, oneAttr);
+  std::map<DenseTensor *, mlir::Value> value_map;
 
   for (auto &node : ir.nodes) {
     auto &node_type = node->op_type;
     if (node_type == "sin") {
+      auto n = static_cast<SinLazyNode *>(node.get());
+      mlir::Value value_in = value_map[n->ins[0]->GetDenseTensor()];
       builder.create<Paddle::SinOp>(mlir::UnknownLoc::get(&context),
-                                    one.getType(), one);
+                                    value_in.getType(), value_in);
+    } else if (node_type == "full") {
+
+      auto n = static_cast<FullLazyNode *>(node.get());
+      auto shape_ = n->shape.GetData();
+      ArrayRef<int64_t> shape{shape_};
+      // TODO(allen) use `value` and `dtype`
+      ElementsAttr oneAttr = builder.getDenseF32ArrayAttr({1.0});
+      auto ty = RankedTensorType::get(shape, builder.getF32Type());
+      // auto ty = UnrankedTensorType::get(builder.getF32Type());
+      mlir::Value full = builder.create<Paddle::ConstantOp>(
+          mlir::UnknownLoc::get(&context), ty, oneAttr);
+      value_map[n->outs[0]->GetDenseTensor()] = full;
     } else {
       llvm::errs() << "unsupported op type: " << node_type << "\n";
     }

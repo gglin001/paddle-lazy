@@ -3,6 +3,11 @@
 #include <paddle/phi/backends/cpu/cpu_context.h>
 #include <paddle/phi/core/kernel_registry.h>
 
+#include "paddle_lazy/lazy_allocator.h"
+#include "paddle_lazy/lazy_backend.h"
+#include "paddle_lazy/lazy_nodes.h"
+#include "paddle_lazy/lazy_tensor.h"
+
 namespace phi {
 
 template <typename T, typename Context, typename VType>
@@ -21,6 +26,14 @@ void FullKernel(const Context& dev_ctx,
                 DenseTensor* out) {
   out->Resize(phi::make_ddim(shape.GetData()));
   FullValue<T>(dev_ctx, out, val.to<T>());
+
+  if (!out->initialized()) {
+    out->AllocateFrom(LazyAllocator::Instance(), out->dtype());
+  }
+  auto lazy_node = std::make_shared<FullLazyNode>(shape, val, dtype);
+  auto lazy_out = std::make_shared<LazyTensor>(out);
+  lazy_node->outs.push_back(lazy_out);
+  LazyBackend::GetInstance()->ir.nodes.push_back(lazy_node);
 }
 
 }  // namespace phi

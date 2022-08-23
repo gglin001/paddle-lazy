@@ -1,7 +1,9 @@
 # TODO(alleng) remove flag
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-inconsistent-missing-override")
 
-add_subdirectory(eager_backend)
+if(WITH_EAGER_BACKEND)
+  add_subdirectory(eager_backend)
+endif()
 
 execute_process(
   COMMAND ${Python3_EXECUTABLE} codegen/autogen_lazy_nodes.py
@@ -15,13 +17,15 @@ execute_process(
 
 file(GLOB KERNELS kernels/*.cc)
 message("KERNELS: ${KERNELS}")
-set(LAZY_SRCS lazy_allocator.cc lazy_tensor.cc lazy_backend.cc
-              lazy_nodes.cc)
+set(LAZY_SRCS lazy_allocator.cc lazy_tensor.cc lazy_backend.cc lazy_nodes.cc)
 
 add_library(lazy_backend SHARED ${LAZY_SRCS} ${KERNELS})
-target_link_libraries(lazy_backend PRIVATE eager_backend)
 target_link_libraries(lazy_backend PRIVATE paddle_import)
 target_link_libraries(lazy_backend PRIVATE :core_avx.so) # special name
+
+if(WITH_EAGER_BACKEND)
+  target_link_libraries(lazy_backend PRIVATE eager_backend)
+endif()
 
 pybind11_add_module(lazy_lib lib.cc)
 target_link_libraries(lazy_lib PRIVATE lazy_backend)

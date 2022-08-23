@@ -1,7 +1,9 @@
 #include "paddle_lazy/lazy_backend.h"
 
 #include <glog/logging.h>
+#ifdef PADDLE_LAZY_WITH_EAGER_BACKEND
 #include "paddle_lazy/eager_backend/op_runner.h"
+#endif
 
 #include "import.h"
 
@@ -39,6 +41,7 @@ void LazyBackend::Compile() {
 }
 
 void LazyBackend::RunCpu() {
+#ifdef PADDLE_LAZY_WITH_EAGER_BACKEND
   LOG(ERROR) << "enter LazyBackend::Run()";
   auto op_runner = OpRunner();
   for (auto node : ir.nodes) {
@@ -48,6 +51,7 @@ void LazyBackend::RunCpu() {
   for (auto node : ir.nodes) {
     op_runner.ToIpu(node);
   }
+#endif
 }
 
 void LazyBackend::RunIpu() {

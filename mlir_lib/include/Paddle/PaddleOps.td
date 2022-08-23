@@ -5,6 +5,12 @@ include "PaddleDialect.td"
 include "PaddleTypes.td"
 include "mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
+include "mlir/IR/OpBase.td"
+include "mlir/IR/AttrTypeBase.td"
+
+// NOTE:
+// - no `DefaultValuedAttr` is used
+// - always has a `assemblyFormat`, will be replace with `hasCustomAssemblyFormat`, TODO
 
 def Paddle_AddOp : Paddle_Op<"add", [NoSideEffect]> {
     let summary = "Illustrates how to define an operation.";
@@ -43,6 +49,22 @@ def Paddle_SinOp : Paddle_Op<"sin", [NoSideEffect]> {
     let results = (outs Paddle_Tensor:$res);
     let assemblyFormat = [{
         $x attr-dict `:` functional-type(operands, results)
+    }];
+}
+
+def Paddle_Conv2dOp : Paddle_Op<"conv2d", [NoSideEffect]> {
+    let summary = "Conv2d op.";
+    let arguments = (ins Paddle_Tensor:$x,
+        Paddle_Tensor:$w,
+        I32ArrayAttr:$strides,
+        I32ArrayAttr:$paddings,
+        StrAttr:$padding_algorithm,
+        SI32Attr:$groups,
+        I32ArrayAttr:$dilations,
+        StrAttr:$data_format);
+    let results = (outs Paddle_Tensor:$y);
+    let assemblyFormat = [{
+        $x $w attr-dict `:` functional-type(operands, results)
     }];
 }
 
