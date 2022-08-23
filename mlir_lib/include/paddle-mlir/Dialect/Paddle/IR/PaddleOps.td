@@ -52,6 +52,15 @@ def Paddle_SinOp : Paddle_Op<"sin", [NoSideEffect]> {
     }];
 }
 
+def Paddle_TanOp : Paddle_Op<"tan", [NoSideEffect]> {
+    let summary = "Tan op.";
+    let arguments = (ins Paddle_Tensor:$x);
+    let results = (outs Paddle_Tensor:$res);
+    let assemblyFormat = [{
+        $x attr-dict `:` functional-type(operands, results)
+    }];
+}
+
 def Paddle_Conv2dOp : Paddle_Op<"conv2d", [NoSideEffect]> {
     let summary = "Conv2d op.";
     let arguments = (ins Paddle_Tensor:$x,

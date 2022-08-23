@@ -7,6 +7,17 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Launch paddle-opt",
+            "program": "${workspaceFolder}/build/bin/paddle-opt",
+            "args": [
+                "--paddle-to-tosa",
+                "mlir_lib/test/Paddle/tan.mlir",
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Launch",
             "program": "${command:cmake.getLaunchTargetPath}",
             "args": [],

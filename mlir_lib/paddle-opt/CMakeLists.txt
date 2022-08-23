@@ -5,3 +5,4 @@ add_llvm_executable(paddle-opt paddle-opt.cpp)
 
 llvm_update_compile_flags(paddle-opt)
 target_link_libraries(paddle-opt PRIVATE ${LIBS})
+target_link_libraries(paddle-opt PRIVATE PaddleMLIRConversionPasses)

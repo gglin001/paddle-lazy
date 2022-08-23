@@ -11,11 +11,12 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/ToolOutputFile.h"
 
+#include "paddle-mlir/Conversion/Passes.h"
 #include "paddle-mlir/Dialect/Paddle/IR/PaddleDialect.h"
 
 int main(int argc, char **argv) {
   mlir::registerAllPasses();
-  // TODO: Register paddle passes here.
+  mlir::paddle::registerConversionPasses();
 
   mlir::DialectRegistry registry;
   registerAllDialects(registry);
