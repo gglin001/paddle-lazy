@@ -11,7 +11,7 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/ToolOutputFile.h"
 
-#include "Paddle/PaddleDialect.h"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleDialect.h"
 
 int main(int argc, char **argv) {
   mlir::registerAllPasses();

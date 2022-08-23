@@ -8,3 +8,6 @@ target_link_libraries(sin ${LIBS})
 
 add_executable(relu relu.cpp)
 target_link_libraries(relu ${LIBS})
+
+add_executable(conv2d conv2d.cpp)
+target_link_libraries(conv2d ${LIBS})

@@ -24,8 +24,8 @@
 
 #include <map>
 
-#include "Paddle/PaddleDialect.h"
-#include "Paddle/PaddleOps.h"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleDialect.h"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleOps.h"
 
 #include "paddle_lazy/lazy_nodes.h"
 #include "paddle_lazy/lazy_nodes_autogen.h"

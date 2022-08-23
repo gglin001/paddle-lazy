@@ -3,7 +3,7 @@
 
 #include "mlir/IR/Dialect.h"
 
-#include "Paddle/PaddleDialect.h.inc"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleDialect.h.inc"
 
 namespace mlir {
 namespace paddle {

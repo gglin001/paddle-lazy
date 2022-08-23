@@ -19,8 +19,8 @@
 #include "llvm/Support/SourceMgr.h"
 #include "llvm/Support/ToolOutputFile.h"
 
-#include "Paddle/PaddleDialect.h"
-#include "Paddle/PaddleOps.h"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleDialect.h"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleOps.h"
 
 using namespace mlir;
 using namespace llvm;

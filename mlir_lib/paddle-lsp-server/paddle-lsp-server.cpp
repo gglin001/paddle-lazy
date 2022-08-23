@@ -3,7 +3,7 @@
 #include "mlir/InitAllDialects.h"
 #include "mlir/Tools/mlir-lsp-server/MlirLspServerMain.h"
 
-#include "Paddle/PaddleDialect.h"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleDialect.h"
 
 int main(int argc, char **argv) {
   mlir::DialectRegistry registry;

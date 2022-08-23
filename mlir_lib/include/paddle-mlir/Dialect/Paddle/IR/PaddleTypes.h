@@ -13,7 +13,7 @@ namespace Paddle {
 } // namespace mlir
 
 #define GET_TYPEDEF_CLASSES
-#include "Paddle/PaddleTypes.h.inc"
+#include "paddle-mlir/Dialect/Paddle/IR/PaddleTypes.h.inc"
 
 // inline methods
 namespace mlir {

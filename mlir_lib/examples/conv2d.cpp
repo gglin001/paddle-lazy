@@ -45,10 +45,19 @@ int main() {
 
   ElementsAttr oneAttr = builder.getDenseF32ArrayAttr({1.0});
   auto ty = UnrankedTensorType::get(builder.getF32Type());
-  mlir::Value one = builder.create<Paddle::ConstantOp>(
+  mlir::Value x = builder.create<Paddle::ConstantOp>(
       mlir::UnknownLoc::get(&context), ty, oneAttr);
-  builder.create<Paddle::ReluOp>(mlir::UnknownLoc::get(&context), one.getType(),
-                                 one);
+  mlir::Value w = builder.create<Paddle::ConstantOp>(
+      mlir::UnknownLoc::get(&context), ty, oneAttr);
+  auto strides = builder.getI32ArrayAttr({0, 0});
+  auto paddings = builder.getI32ArrayAttr({0, 0});
+  auto padding_algorithm = builder.getStringAttr({"EXPLICIT"});
+  auto groups = builder.getI32IntegerAttr(1);
+  auto dilations = builder.getI32ArrayAttr({0, 0});
+  auto data_format = builder.getStringAttr({"NCHW"});
+  builder.create<Paddle::Conv2dOp>(mlir::UnknownLoc::get(&context), x.getType(),
+                                   x, w, strides, paddings, padding_algorithm,
+                                   groups, dilations, data_format);
 
   module->dump();
 }

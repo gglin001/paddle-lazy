@@ -1,1 +1,1 @@
-add_subdirectory(Paddle)
+add_subdirectory(paddle-mlir)
