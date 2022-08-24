@@ -18,7 +18,6 @@ namespace mlir {
 namespace paddle {
 
 namespace {
-
 class TanOpLowering : public OpRewritePattern<TanOp> {
 public:
   using OpRewritePattern<TanOp>::OpRewritePattern;
@@ -27,6 +26,18 @@ public:
                                 PatternRewriter &rewriter) const override {
     rewriter.replaceOpWithNewOp<tosa::TanhOp>(op, op->getResults().getType(),
                                               op->getOperands());
+    return success();
+  }
+};
+
+class ConstantOpLowering : public OpRewritePattern<ConstantOp> {
+public:
+  using OpRewritePattern<ConstantOp>::OpRewritePattern;
+
+  LogicalResult matchAndRewrite(ConstantOp op,
+                                PatternRewriter &rewriter) const override {
+    rewriter.replaceOpWithNewOp<arith::ConstantOp>(
+        op, op->getResults().getType(), op.valueAttr());
     return success();
   }
 };
@@ -45,8 +56,9 @@ public:
                            arith::ArithmeticDialect>();
     RewritePatternSet patterns(&getContext());
 
-    target.addIllegalOp<TanOp>();
+    // target.addIllegalOp<TanOp>();
     patterns.add<TanOpLowering>(&getContext());
+    patterns.add<ConstantOpLowering>(&getContext());
 
     // TODO support TypeConverter
     TypeConverter typeConverter;
