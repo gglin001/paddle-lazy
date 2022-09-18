@@ -37,7 +37,7 @@ public:
   LogicalResult matchAndRewrite(ConstantOp op,
                                 PatternRewriter &rewriter) const override {
     rewriter.replaceOpWithNewOp<arith::ConstantOp>(
-        op, op->getResults().getType(), op.valueAttr());
+        op, op->getResults().getType(), op.getValueAttr());
     return success();
   }
 };
